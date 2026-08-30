@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tử Vi & Âm Lịch Mỗi Ngày</title>
+    <meta name="theme-color" content="#4A0E17">
+    <meta name="description" content="Ứng dụng tra cứu Tử Vi, Âm Lịch, Cung Phi và Phong Thủy Hàng Ngày">
+    <link rel="manifest" id="manifest-placeholder">
+
+    <style>
+        :root {
+            --primary: #8B0000;
+            --primary-dark: #4A0E17;
+            --accent: #D4AF37;
+            --bg: #F4F1EA;
+            --card-bg: #FFFFFF;
+            --text: #2B2B2B;
+            --text-light: #555555;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 30px; }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--accent);
+            text-align: center;
+            padding: 18px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+        }
+        header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: 1px; }
+
+        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px; font-weight: 600; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CCC;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: #FFFDF9;
+        }
+
+        button.btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), #B8860B);
+            color: #FFF;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .info-item { background: #FAF7F2; padding: 10px; border-radius: 6px; border-left: 3px solid var(--accent); }
+        .info-item .val { font-weight: bold; color: var(--primary-dark); margin-top: 3px; font-size: 0.95rem; }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #FFF;
+            background: var(--primary);
+        }
+
+        .pwa-btn {
+            display: none;
+            width: 100%;
+            background: var(--primary-dark);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .advice-box { font-size: 0.9rem; line-height: 1.5; color: #333; background: #FFFDF8; padding: 12px; border-radius: 6px; border: 1px dashed var(--accent); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>TỬ VI & ÂM LỊCH MỖI NGÀY</h1>
+    </header>
+
+    <div class="container">
+        <!-- Thông tin người dùng -->
+        <div class="card">
+            <div class="card-title">Thông Tin Bản Mệnh</div>
+            <div class="form-group">
+                <label>Họ và tên</label>
+                <input type="text" id="userName" placeholder="Nhập họ và tên...">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Ngày sinh (Dương lịch)</label>
+                    <input type="date" id="userDob">
+                </div>
+                <div class="form-group">
+                    <label>Giới tính</label>
+                    <select id="userGender">
+                        <option value="nam">Nam</option>
+                        <option value="nu">Nữ</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-submit" onclick="saveUserInfo()">Lưu & Luận Giải Tử Vi</button>
+            <button id="btnInstall" class="pwa-btn">Cài đặt ứng dụng về màn hình chính</button>
+        </div>
+
+        <!-- Tử vi & Âm lịch hôm nay -->
+        <div class="card">
+            <div class="card-title">
+                <span>Lịch Hôm Nay</span>
+                <span id="todaySolar" class="badge">--/--/----</span>
+            </div>
+            <div class="grid-2">
+                <div class="info-item">
+                    <label>Ngày Âm Lịch</label>
+                    <div class="val" id="lunarDate">--/--/----</div>
+                </div>
+                <div class="info-item">
+                    <label>Can Chi Ngày</label>
+                    <div class="val" id="canChiDay">----</div>
+                </div>
+                <div class="info-item">
+                    <label>Can Chi Tháng / Năm</label>
+                    <div class="val" id="canChiMonthYear">----</div>
+                </div>
+                <div class="info-item">
+                    <label>Giờ Hoàng Đạo</label>
+                    <div class="val" style="font-size:0.8rem;" id="zodiacHours">----</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Luận giải bản mệnh -->
+        <div class="card">
+            <div class="card-title">Hồ Sơ Bản Mệnh</div>
+            <div class="grid-2">
+                <div class="info-item">
+                    <label>Năm Sinh Can Chi</label>
+                    <div class="val" id="userCanChi">--</div>
+                </div>
+                <div class="info-item">
+                    <label>Mệnh Nạp Âm</label>
+                    <div class="val" id="userNapAm">--</div>
+                </div>
+                <div class="info-item">
+                    <label>Cung Phi Nam/Nữ</label>
+                    <div class="val" id="userCungPhi">--</div>
+                </div>
+                <div class="info-item">
+                    <label>Màu Sắc Hợp Mệnh</label>
+                    <div class="val" id="luckyColors">--</div>
+                </div>
+            </div>
+            <div style="margin-top: 10px;" class="info-item">
+                <label>Hướng Tốt (Sinh Khí, Thiên Y, Diên Niên, Phục Vị)</label>
+                <div class="val" id="goodDirections">--</div>
+            </div>
+        </div>
+
+        <!-- Lời khuyên Phong thủy -->
+        <div class="card">
+            <div class="card-title">Dự Báo & Lời Khuyên Hàng Ngày</div>
+            <div class="advice-box" id="dailyAdvice">
+                Vui lòng nhập ngày tháng năm sinh ở trên để ứng dụng tự động tính toán bản mệnh và đưa ra lời khuyên phong thủy chi tiết cho hôm nay.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === 1. THUẬT TOÁN ĐỔI ÂM LỊCH HỒ NGỌC ĐỨC (MÚI GIỜ GMT+7) ===
+        function getSunLongitude(jdn) {
+            const T = (jdn - 2451545.0) / 36525.0;
+            let L = 280.46645 + 36000.76983 * T;
+            let M = 357.52910 + 35999.05030 * T;
+            L = (L % 360 + 360) % 360;
+            M = (M % 360 + 360) % 360;
+            const C = (1.914600 - 0.004817 * T) * Math.sin(M * Math.PI / 180) + (0.019993 - 0.000101 * T) * Math.sin(2 * M * Math.PI / 180);
+            return ((L + C) % 360 + 360) % 360;
+        }
+
+        function getNewMoonDay(k) {
+            const T = k / 1236.85;
+            const T2 = T * T;
+            const T3 = T2 * T;
+            let Jd1 = 2451549.59274 + 29.53058868 * k + 0.00015437 * T2 - 0.000000150 * T3;
+            let M = 2.5534 + 29.10535669 * k - 0.0000218 * T2;
+            let Mpr = 201.5643 + 385.81693528 * k + 0.0107438 * T2;
+            let F = 160.7108 + 390.67050274 * k - 0.0016161 * T2;
+            M = (M % 360 + 360) % 360 * Math.PI / 180;
+            Mpr = (Mpr % 360 + 360) % 360 * Math.PI / 180;
+            F = (F % 360 + 360) % 360 * Math.PI / 180;
+
+            let C1 = (0.1734 - 0.000393 * T) * Math.sin(M) + 0.0021 * Math.sin(2 * M);
+            C1 = C1 - 0.4068 * Math.sin(Mpr) + 0.0161 * Math.sin(2 * Mpr);
+            C1 = C1 - 0.0004 * Math.sin(3 * Mpr) + 0.0104 * Math.sin(2 * F);
+            C1 = C1 - 0.0051 * Math.sin(M + Mpr) - 0.0074 * Math.sin(M - Mpr);
+            C1 = C1 + 0.0004 * Math.sin(2 * F + M) - 0.0004 * Math.sin(2 * F - M);
+            return Math.floor(Jd1 + C1 + 0.5 + 7.0 / 24.0);
+        }
+
+        function jdFromDate(dd, mm, yy) {
+            const a = Math.floor((14 - mm) / 12);
+            const y = yy + 4800 - a;
+            const m = mm + 12 * a - 3;
+            return dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+        }
+
+        function convertSolar2Lunar(dd, mm, yy) {
+            const dayNumber = jdFromDate(dd, mm, yy);
+            const k = Math.floor((dayNumber - 2451545.0) / 29.53058868);
+            let lastMonthStart = getNewMoonDay(k);
+            if (lastMonthStart > dayNumber) {
+                lastMonthStart = getNewMoonDay(k - 1);
+            }
+            
+            const lunarDay = dayNumber - lastMonthStart + 1;
+            const a11 = getNewMoonDay(Math.floor((jdFromDate(31, 12, yy) - 2451545.0) / 29.53058868));
+            let lunarMonth = Math.floor((lastMonthStart - a11) / 29.53) + 11;
+            if (lunarMonth > 12) lunarMonth -= 12;
+
+            let lunarYear = yy;
+            if (lunarMonth >= 11 && dd < 20) lunarYear = yy - 1;
+
+            return { day: lunarDay, month: lunarMonth, year: lunarYear, jd: dayNumber };
+        }
+
+        // === 2. DANH MỤC CAN CHI - NGŨ HÀNH & CUNG PHI ===
+        const CAN = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
+        const CHI = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
+
+        const NAP_AM = {
+            "Giáp Tý": "Hải Trung Kim", "Ất Sửu": "Hải Trung Kim", "Bính Dần": "Lư Trung Hỏa", "Đinh Mão": "Lư Trung Hỏa",
+            "Mậu Thìn": "Đại Lâm Mộc", "Kỷ Tỵ": "Đại Lâm Mộc", "Canh Ngọ": "Lộ Trung Thổ", "Tân Mùi": "Lộ Trung Thổ",
+            "Nhâm Thân": "Kiếm Phong Kim", "Quý Dậu": "Kiếm Phong Kim", "Giáp Tuất": "Sơn Đầu Hỏa", "Ất Hợi": "Sơn Đầu Hỏa",
+            "Bính Tý": "Giản Hạ Thủy", "Đinh Sửu": "Giản Hạ Thủy", "Mậu Dần": "Thành Đầu Thổ", "Kỷ Mão": "Thành Đầu Thổ",
+            "Canh Thìn": "Bạch Lạp Kim", "Tân Tỵ": "Bạch Lạp Kim", "Nhâm Ngọ": "Dương Liễu Mộc", "Quý Mùi": "Dương Liễu Mộc",
+            "Giáp Thân": "Tuyền Trung Thủy", "Ất Dậu": "Tuyền Trung Thủy", "Bính Tuất": "Ốc Thượng Thổ", "Đinh Hợi": "Ốc Thượng Thổ",
+            "Mậu Tý": "Tích Lịch Hỏa", "Kỷ Sửu": "Tích Lịch Hỏa", "Canh Dần": "Tùng Bách Mộc", "Tân Mão": "Tùng Bách Mộc",
+            "Nhâm Thìn": "Trường Lưu Thủy", "Quý Tỵ": "Trường Lưu Thủy", "Giáp Ngọ": "Sa Trung Kim", "Ất Mùi": "Sa Trung Kim",
+            "Bính Thân": "Sơn Hạ Hỏa", "Đinh Dậu": "Sơn Hạ Hỏa", "Mậu Tuất": "Bình Địa Mộc", "Kỷ Hợi": "Bình Địa Mộc",
+            "Canh Tý": "Bích Thượng Thổ", "Tân Sửu": "Bích Thượng Thổ", "Nhâm Dần": "Kim Bạc Kim", "Quý Mão": "Kim Bạc Kim",
+            "Giáp Thìn": "Phúc Đăng Hỏa", "Ất Tỵ": "Phúc Đăng Hỏa", "Bính Ngọ": "Thiên Hà Thủy", "Đinh Mùi": "Thiên Hà Thủy",
+            "Mậu Thân": "Đại Dịch Thổ", "Kỷ Dậu": "Đại Dịch Thổ", "Canh Tuất": "Thoa Xuyên Kim", "Tân Hợi": "Thoa Xuyên Kim",
+            "Nhâm Tý": "Tang Đố Mộc", "Quý Sửu": "Tang Đố Mộc", "Giáp Dần": "Đại Khê Thủy", "Ất Mão": "Đại Khê Thủy",
+            "Bính Thìn": "Sa Trung Thổ", "Đinh Tỵ": "Sa Trung Thổ", "Mậu Ngọ": "Thiên Thượng Hỏa", "Kỷ Mùi": "Thiên Thượng Hỏa",
+            "Canh Thân": "Thạch Lựu Mộc", "Tân Dậu": "Thạch Lựu Mộc", "Nhâm Tuất": "Đại Hải Thủy", "Quý Hợi": "Đại Hải Thủy"
+        };
+
+        function getCanChiYear(year) {
+            return CAN[(year + 6) % 10] + " " + CHI[(year + 8) % 12];
+        }
+
+        function getCanChiDay(jd) {
+            return CAN[(jd + 9) % 10] + " " + CHI[(jd + 1) % 12];
+        }
+
+        function getCanChiMonth(month, year) {
+            const canYear = (year + 6) % 10;
+            const canStartMonth = (canYear * 2 + 1) % 10;
+            const canMonth = (canStartMonth + month - 1) % 10;
+            return CAN[canMonth] + " " + CHI[(month + 1) % 12];
+        }
+
+        function getCungPhi(year, gender) {
+            let sum = String(year).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            while (sum > 9) sum = String(sum).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            
+            let code = gender === 'nam' ? (11 - sum) : (sum + 4);
+            while (code > 9) code -= 9;
+            if (code <= 0) code += 9;
+            if (code === 5) code = (gender === 'nam') ? 2 : 8;
+
+            const cungMap = {
+                1: { name: "Khảm (Thủy)", good: "Đông, Đông Nam, Nam, Bắc", color: "Trắng, Đen, Xanh dương" },
+                2: { name: "Khôn (Thổ)", good: "Tây Bắc, Đông Bắc, Tây, Tây Nam", color: "Đỏ, Hồng, Vàng, Nâu" },
+                3: { name: "Chấn (Mộc)", good: "Nam, Bắc, Đông, Đông Nam", color: "Đen, Xanh dương, Xanh lá" },
+                4: { name: "Tốn (Mộc)", good: "Bắc, Nam, Đông Nam, Đông", color: "Đen, Xanh dương, Xanh lá" },
+                6: { name: "Càn (Kim)", good: "Tây, Tây Bắc, Tây Nam, Đông Bắc", color: "Vàng, Nâu, Trắng, Bạc" },
+                7: { name: "Đoài (Kim)", good: "Tây Nam, Tây, Tây Bắc, Đông Bắc", color: "Vàng, Nâu, Trắng, Bạc" },
+                8: { name: "Cấn (Thổ)", good: "Tây Nam, Tây Bắc, Tây, Đông Bắc", color: "Đỏ, Hồng, Vàng, Nâu" },
+                9: { name: "Ly (Hỏa)", good: "Đông, Đông Nam, Bắc, Nam", color: "Xanh lá, Đỏ, Hồng, Tím" }
+            };
+            return cungMap[code] || { name: "Chưa xác định", good: "--", color: "--" };
+        }
+
+        // === 3. XỬ LÝ GIAO DIỆN & LƯU TRỮ LOCALSTORAGE ===
+        function saveUserInfo() {
+            const name = document.getElementById('userName').value.trim();
+            const dob = document.getElementById('userDob').value;
+            const gender = document.getElementById('userGender').value;
+
+            if (!dob) {
+                alert("Vui lòng chọn ngày sinh!");
+                return;
+            }
+
+            const userData = { name, dob, gender };
+            localStorage.setItem('tuvi_user_app', JSON.stringify(userData));
+            updateUI();
+        }
+
+        function updateUI() {
+            const now = new Date();
+            const dd = now.getDate();
+            const mm = now.getMonth() + 1;
+            const yy = now.getFullYear();
+
+            document.getElementById('todaySolar').innerText = `${dd}/${mm}/${yy}`;
+
+            // Âm lịch hiện tại
+            const lunarToday = convertSolar2Lunar(dd, mm, yy);
+            document.getElementById('lunarDate').innerText = `${lunarToday.day}/${lunarToday.month}/${lunarToday.year}`;
+            
+            const dayCanChiStr = getCanChiDay(lunarToday.jd);
+            const monthCanChiStr = getCanChiMonth(lunarToday.month, lunarToday.year);
+            const yearCanChiStr = getCanChiYear(lunarToday.year);
+
+            document.getElementById('canChiDay').innerText = dayCanChiStr;
+            document.getElementById('canChiMonthYear').innerText = `${monthCanChiStr} - ${yearCanChiStr}`;
+            document.getElementById('zodiacHours').innerText = "Tý (23-1), Dần (3-5), Mão (5-7), Ngọ (11-13), Mùi (13-15), Dậu (17-19)";
+
+            // Đọc dữ liệu người dùng
+            const saved = localStorage.getItem('tuvi_user_app');
+            if (saved) {
+                const user = JSON.parse(saved);
+                document.getElementById('userName').value = user.name || '';
+                document.getElementById('userDob').value = user.dob || '';
+                document.getElementById('userGender').value = user.gender || 'nam';
+
+                const dobDate = new Date(user.dob);
+                const birthYear = dobDate.getFullYear();
+                
+                // Tính Can Chi & Nạp Âm ngày sinh
+                const userLunarBirth = convertSolar2Lunar(dobDate.getDate(), dobDate.getMonth() + 1, birthYear);
+                const birthCanChi = getCanChiYear(userLunarBirth.year);
+                const napAmStr = NAP_AM[birthCanChi] || "Chưa xác định";
+                const cungInfo = getCungPhi(userLunarBirth.year, user.gender);
+
+                document.getElementById('userCanChi').innerText = birthCanChi;
+                document.getElementById('userNapAm').innerText = napAmStr;
+                document.getElementById('userCungPhi').innerText = cungInfo.name;
+                document.getElementById('goodDirections').innerText = cungInfo.good;
+                document.getElementById('luckyColors').innerText = cungInfo.color;
+
+                const nameDisplay = user.name ? `<b>${user.name}</b>` : 'Bạn';
+                const mainGoodDir = cungInfo.good.split(',')[0];
+                document.getElementById('dailyAdvice').innerHTML = 
+                    `Kính chào ${nameDisplay} (${birthCanChi} - Mệnh ${napAmStr})!<br><br>` +
+                    `• <b>Về công việc:</b> Hôm nay ngày ${dayCanChiStr}, trường khí tương hợp với bản mệnh. Thích hợp để triển khai kế hoạch mới, họp hành hoặc giao dịch.<br>` +
+                    `• <b>Xuất hành & Phong thủy:</b> Nên ưu tiên di chuyển hoặc đặt bàn làm việc hướng <b>${mainGoodDir}</b> để thu hút Sinh Khí.<br>` +
+                    `• <b>Màu sắc may mắn:</b> Tăng cường sử dụng trang phục/phụ kiện sắc <b>${cungInfo.color.split(',')[0]}</b> giúp tăng tài lộc.`;
+            }
+        }
+
+        // === 4. CẤU HÌNH DYNAMIC MANIFEST & SERVICE WORKER (PWA) ===
+        const manifestData = {
+            "name": "Tử Vi & Âm Lịch Mỗi Ngày",
+            "short_name": "TửViPWA",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#F4F1EA",
+            "theme_color": "#4A0E17",
+            "icons": [{
+                "src": "https://cdn-icons-png.flaticon.com/512/2913/2913584.png",
+                "sizes": "512x512",
+                "type": "image/png"
+            }]
+        };
+
+        const blobManifest = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+        document.getElementById('manifest-placeholder').setAttribute('href', URL.createObjectURL(blobManifest));
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById('btnInstall');
+            btn.style.display = 'block';
+            btn.addEventListener('click', () => {
+                btn.style.display = 'none';
+                deferredPrompt.prompt();
+            });
+        });
+
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'tuvi-pwa-v1';
+                self.addEventListener('install', e => {
+                    e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['./'])));
+                });
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
+                });
+            `;
+            const blobSW = new Blob([swCode], { type: 'application/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(blobSW));
+        }
+
+        window.onload = updateUI;
+    </script>
+</body>
+</html>
