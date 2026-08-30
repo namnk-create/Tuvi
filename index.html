@@ -1,437 +1,942 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tử Vi & Âm Lịch Mỗi Ngày</title>
-    <meta name="theme-color" content="#4A0E17">
-    <meta name="description" content="Ứng dụng tra cứu Tử Vi, Âm Lịch, Cung Phi và Phong Thủy Hàng Ngày">
-    <link rel="manifest" id="manifest-placeholder">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>🔮 Tử Vi Mỗi Ngày</title>
 
-    <style>
-        :root {
-            --primary: #8B0000;
-            --primary-dark: #4A0E17;
-            --accent: #D4AF37;
-            --bg: #F4F1EA;
-            --card-bg: #FFFFFF;
-            --text: #2B2B2B;
-            --text-light: #555555;
-        }
+<!-- ===== PWA: cho phep "Them vao Man hinh chinh" ===== -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIlThu60gVmkgTeG7l2kgTmfDoHkgLSBYZW0gQuG6o24gTeG7h25oICYgSOG7j2kgxJDDoXAiLCAic2hvcnRfbmFtZSI6ICJU4butIFZpIiwgImRlc2NyaXB0aW9uIjogIlhlbSBiYW4gbWVuaCwgbmd1IGhhbmgsIGN1bmcgcGhpIHZhIGhvaSBkYXAgbmVuL2tob25nIG5lbiBtb2kgbmdheSIsICJzdGFydF91cmwiOiAiLiIsICJzY29wZSI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxQTE1MzMiLCAidGhlbWVfY29sb3IiOiAiIzI0MUI0NSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBeU1EQWdNakF3SWo0S1BISmxZM1FnZDJsa2RHZzlJakl3TUNJZ2FHVnBaMmgwUFNJeU1EQWlJSEo0UFNJME1pSWdabWxzYkQwaUl6STBNVUkwTlNJdlBnbzhkR1Y0ZENCNFBTSXhNREFpSUhrOUlqRXpOU0lnWm05dWRDMXphWHBsUFNJeE1EQWlJSFJsZUhRdFlXNWphRzl5UFNKdGFXUmtiR1VpUHZDZmxLNDhMM1JsZUhRK0Nqd3ZjM1puUGc9PSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBeU1EQWdNakF3SWo0S1BISmxZM1FnZDJsa2RHZzlJakl3TUNJZ2FHVnBaMmgwUFNJeU1EQWlJSEo0UFNJME1pSWdabWxzYkQwaUl6STBNVUkwTlNJdlBnbzhkR1Y0ZENCNFBTSXhNREFpSUhrOUlqRXpOU0lnWm05dWRDMXphWHBsUFNJeE1EQWlJSFJsZUhRdFlXNWphRzl5UFNKdGFXUmtiR1VpUHZDZmxLNDhMM1JsZUhRK0Nqd3ZjM1puUGc9PSIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSJ9XX0=">
+<meta name="theme-color" content="#241B45">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tử Vi">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj4KPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSI0MiIgZmlsbD0iIzI0MUI0NSIvPgo8dGV4dCB4PSIxMDAiIHk9IjEzNSIgZm9udC1zaXplPSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCflK48L3RleHQ+Cjwvc3ZnPg==">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj4KPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSI0MiIgZmlsbD0iIzI0MUI0NSIvPgo8dGV4dCB4PSIxMDAiIHk9IjEzNSIgZm9udC1zaXplPSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCflK48L3RleHQ+Cjwvc3ZnPg==">
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding-bottom: 30px; }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: var(--accent);
-            text-align: center;
-            padding: 18px 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
-        }
-        header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: 1px; }
+<style>
+:root{
+  --bg:#1A1533; --bg-deep:#120E24; --card:#251E45; --card-soft:#2E2555;
+  --ink:#F3EEDD; --ink-soft:#B8AFD9;
+  --gold:#E8C468; --gold-dark:#C9A247; --gold-tint:rgba(232,196,104,.15);
+  --good:#6FCF97; --good-tint:rgba(111,207,151,.15);
+  --bad:#EB5D5D; --bad-tint:rgba(235,93,93,.15);
+  --neutral:#8FA6C9; --neutral-tint:rgba(143,166,201,.15);
+  --border:#3A3163; --shadow:0 4px 16px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:24px; min-height:100vh; overscroll-behavior-y:contain;
+}
+.stars-bg{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+  background-image:radial-gradient(2px 2px at 20px 30px, var(--gold-tint) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 90px 80px, var(--gold-tint) 0%, transparent 100%),
+    radial-gradient(2px 2px at 160px 40px, var(--gold-tint) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 220px 100px, var(--gold-tint) 0%, transparent 100%);
+  background-size:250px 150px; background-repeat:repeat;
+}
+.wrap{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:20px 16px;}
 
-        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+.app-header{text-align:center; margin-bottom:18px;}
+.app-header .t1{font-size:22px; font-weight:800; color:var(--gold);}
+.app-header .t2{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-        }
+/* Modal setup thong tin */
+.setup-overlay{
+  display:none; position:fixed; inset:0; z-index:200; background:var(--bg-deep);
+  align-items:center; justify-content:center;
+  padding:calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
+}
+.setup-overlay.open{display:flex;}
+.setup-box{max-width:380px; width:100%; text-align:center;}
+.setup-icon{font-size:48px; margin-bottom:14px;}
+.setup-title{font-size:20px; font-weight:800; color:var(--gold); margin-bottom:8px;}
+.setup-sub{font-size:13px; color:var(--ink-soft); margin-bottom:22px; line-height:1.5;}
+.setup-field{margin-bottom:14px; text-align:left;}
+.setup-field label{display:block; font-size:12px; color:var(--ink-soft); margin-bottom:6px; font-weight:700;}
+.setup-input{
+  width:100%; padding:13px 14px; border:1.5px solid var(--border); border-radius:12px;
+  font-size:15px; background:var(--card); color:var(--ink);
+}
+.setup-input:focus{outline:none; border-color:var(--gold);}
+.setup-row{display:flex; gap:10px;}
+.setup-row .setup-field{flex:1;}
+.gender-row{display:flex; gap:10px;}
+.gender-btn{flex:1; padding:12px; border:1.5px solid var(--border); border-radius:12px; background:var(--card); color:var(--ink-soft); font-weight:700; cursor:pointer;}
+.gender-btn.active{border-color:var(--gold); background:var(--gold-tint); color:var(--gold);}
+.time-row{display:flex; gap:8px;}
+.time-btn{flex:1; padding:11px 4px; border:1.5px solid var(--border); border-radius:10px; background:var(--card); color:var(--ink-soft); font-weight:600; font-size:12.5px; cursor:pointer;}
+.time-btn.active{border-color:var(--gold); background:var(--gold-tint); color:var(--gold);}
+.btn-gold{
+  width:100%; background:linear-gradient(135deg, var(--gold), var(--gold-dark)); color:#241B45; border:none;
+  border-radius:12px; padding:15px; font-size:15px; font-weight:800; cursor:pointer; margin-top:8px;
+  box-shadow:0 4px 14px rgba(232,196,104,.3);
+}
+.btn-secondary-dark{width:100%; background:var(--card); color:var(--ink); border:1.5px solid var(--border); border-radius:12px; padding:13px; font-size:13.5px; font-weight:700; cursor:pointer; margin-top:10px;}
 
-        .card-title {
-            font-size: 1.05rem;
-            color: var(--primary-dark);
-            font-weight: 700;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 6px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* Cards */
+.card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; margin-bottom:14px; box-shadow:var(--shadow);}
+.card-title{font-size:12px; font-weight:800; color:var(--gold); text-transform:uppercase; letter-spacing:.5px; margin-bottom:12px; display:flex; align-items:center; gap:6px;}
+.menh-hero{text-align:center; padding:8px 0 4px;}
+.menh-hero .cc{font-size:26px; font-weight:800; color:var(--gold);}
+.menh-hero .cg{font-size:14px; color:var(--ink-soft); margin-top:4px;}
+.menh-hero .hanh-badge{display:inline-block; margin-top:12px; padding:8px 18px; border-radius:20px; background:var(--gold-tint); color:var(--gold); font-weight:800; font-size:14px;}
+.menh-hero .napam{font-size:12px; color:var(--ink-soft); margin-top:8px;}
 
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px; font-weight: 600; }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #CCC;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            background-color: #FFFDF9;
-        }
+.info-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
+.info-box{background:var(--card-soft); border-radius:12px; padding:12px; text-align:center;}
+.info-box .l{font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; margin-bottom:4px;}
+.info-box .v{font-size:14px; font-weight:800; color:var(--ink);}
 
-        button.btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent), #B8860B);
-            color: #FFF;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
+.color-swatch-row{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
+.color-swatch{display:flex; align-items:center; gap:6px; background:var(--card-soft); padding:6px 10px; border-radius:20px; font-size:12px; color:var(--ink-soft);}
+.color-dot{width:14px; height:14px; border-radius:50%; border:1px solid rgba(255,255,255,.2);}
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .info-item { background: #FAF7F2; padding: 10px; border-radius: 6px; border-left: 3px solid var(--accent); }
-        .info-item .val { font-weight: bold; color: var(--primary-dark); margin-top: 3px; font-size: 0.95rem; }
-        
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: #FFF;
-            background: var(--primary);
-        }
+.today-verdict{text-align:center; padding:6px 0 10px;}
+.today-verdict .emoji{font-size:36px; margin-bottom:6px;}
+.today-verdict .label{font-size:16px; font-weight:800;}
+.today-verdict.good .label{color:var(--good);}
+.today-verdict.bad .label{color:var(--bad);}
+.today-verdict.neutral .label{color:var(--neutral);}
+.today-desc{font-size:13px; color:var(--ink-soft); text-align:center; line-height:1.6; margin-top:6px;}
 
-        .pwa-btn {
-            display: none;
-            width: 100%;
-            background: var(--primary-dark);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-top: 10px;
-            cursor: pointer;
-        }
+.date-picker-row{display:flex; gap:10px; align-items:center;}
+.date-picker-row input[type="date"]{flex:1;}
+.btn-today-link{background:var(--gold-tint); color:var(--gold); border:1px solid var(--gold); border-radius:10px; padding:12px 14px; font-weight:700; font-size:12.5px; cursor:pointer; white-space:nowrap;}
 
-        .advice-box { font-size: 0.9rem; line-height: 1.5; color: #333; background: #FFFDF8; padding: 12px; border-radius: 6px; border: 1px dashed var(--accent); }
-    </style>
+.hoangdao-badge-row{text-align:center; margin-bottom:10px;}
+.hoangdao-badge{display:inline-block; padding:5px 14px; border-radius:14px; font-size:11.5px; font-weight:800;}
+.hoangdao-badge.good{background:var(--good-tint); color:var(--good);}
+.hoangdao-badge.bad{background:var(--bad-tint); color:var(--bad);}
+
+.gio-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;}
+.gio-cell{background:var(--card-soft); border-radius:10px; padding:9px 6px; text-align:center;}
+.gio-cell.good{background:var(--good-tint);}
+.gio-cell.bad{background:var(--bad-tint); opacity:.75;}
+.gio-cell .g-name{font-size:12.5px; font-weight:800; color:var(--ink);}
+.gio-cell.good .g-name{color:var(--good);}
+.gio-cell.bad .g-name{color:var(--bad);}
+.gio-cell .g-time{font-size:10px; color:var(--ink-soft); margin-top:2px;}
+.gio-legend{display:flex; align-items:center; justify-content:center; gap:6px; font-size:11px; color:var(--ink-soft); margin-top:12px;}
+.gio-dot{width:10px; height:10px; border-radius:50%; display:inline-block;}
+.gio-dot.good{background:var(--good);}
+.gio-dot.bad{background:var(--bad);}
+
+.reason-block{margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);}
+.reason-block .r-title{font-size:11px; font-weight:800; color:var(--gold); text-transform:uppercase; margin-bottom:5px;}
+.reason-block .r-text{font-size:12.5px; color:var(--ink-soft); line-height:1.6;}
+.tuoi-tag-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;}
+.tuoi-tag{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:4px 9px; font-size:11.5px;}
+.tuoi-tag.good{border-color:var(--good); color:var(--good);}
+.tuoi-tag.bad{border-color:var(--bad); color:var(--bad);}
+.today-cc{text-align:center; font-size:12px; color:var(--ink-soft); margin-bottom:10px;}
+
+/* Hoi dap */
+.qa-chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+.qa-chip{background:var(--card-soft); border:1px solid var(--border); border-radius:20px; padding:9px 14px; font-size:12.5px; color:var(--ink-soft); cursor:pointer; font-weight:600;}
+.qa-chip.active{background:var(--gold-tint); border-color:var(--gold); color:var(--gold);}
+.qa-input-row{display:flex; gap:8px; margin-bottom:14px;}
+.qa-input{flex:1; padding:12px 14px; border:1.5px solid var(--border); border-radius:12px; background:var(--card-soft); color:var(--ink); font-size:13.5px;}
+.qa-input:focus{outline:none; border-color:var(--gold);}
+.qa-ask-btn{background:var(--gold); color:#241B45; border:none; border-radius:12px; padding:0 18px; font-weight:800; cursor:pointer;}
+.qa-answer{background:var(--card-soft); border-radius:14px; padding:16px; margin-top:6px;}
+.qa-answer .q-echo{font-size:12px; color:var(--ink-soft); margin-bottom:10px; font-style:italic;}
+.qa-answer .verdict-badge{display:inline-block; padding:7px 16px; border-radius:20px; font-weight:800; font-size:14px; margin-bottom:10px;}
+.qa-answer .verdict-badge.good{background:var(--good-tint); color:var(--good);}
+.qa-answer .verdict-badge.bad{background:var(--bad-tint); color:var(--bad);}
+.qa-answer .verdict-badge.neutral{background:var(--neutral-tint); color:var(--neutral);}
+.qa-answer .advice-text{font-size:13.5px; line-height:1.7; color:var(--ink);}
+
+.edit-link{background:none; border:none; color:var(--gold); font-size:12px; font-weight:700; text-decoration:underline; cursor:pointer; padding:4px 0;}
+.disclaimer{font-size:10.5px; color:var(--ink-soft); text-align:center; line-height:1.6; margin-top:20px; padding:0 10px; opacity:.7;}
+</style>
 </head>
+
 <body>
+<div class="stars-bg"></div>
 
-    <header>
-        <h1>TỬ VI & ÂM LỊCH MỖI NGÀY</h1>
-    </header>
+<!-- ===== MODAL NHAP THONG TIN LAN DAU ===== -->
+<div class="setup-overlay" id="setupOverlay">
+  <div class="setup-box">
+    <div class="setup-icon">🔮</div>
+    <div class="setup-title">Xem Bản Mệnh Của Bạn</div>
+    <div class="setup-sub">Nhập thông tin để app tính Ngũ hành, Cung phi và đưa ra lời khuyên phù hợp mỗi ngày</div>
 
-    <div class="container">
-        <!-- Thông tin người dùng -->
-        <div class="card">
-            <div class="card-title">Thông Tin Bản Mệnh</div>
-            <div class="form-group">
-                <label>Họ và tên</label>
-                <input type="text" id="userName" placeholder="Nhập họ và tên...">
-            </div>
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>Ngày sinh (Dương lịch)</label>
-                    <input type="date" id="userDob">
-                </div>
-                <div class="form-group">
-                    <label>Giới tính</label>
-                    <select id="userGender">
-                        <option value="nam">Nam</option>
-                        <option value="nu">Nữ</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn-submit" onclick="saveUserInfo()">Lưu & Luận Giải Tử Vi</button>
-            <button id="btnInstall" class="pwa-btn">Cài đặt ứng dụng về màn hình chính</button>
-        </div>
-
-        <!-- Tử vi & Âm lịch hôm nay -->
-        <div class="card">
-            <div class="card-title">
-                <span>Lịch Hôm Nay</span>
-                <span id="todaySolar" class="badge">--/--/----</span>
-            </div>
-            <div class="grid-2">
-                <div class="info-item">
-                    <label>Ngày Âm Lịch</label>
-                    <div class="val" id="lunarDate">--/--/----</div>
-                </div>
-                <div class="info-item">
-                    <label>Can Chi Ngày</label>
-                    <div class="val" id="canChiDay">----</div>
-                </div>
-                <div class="info-item">
-                    <label>Can Chi Tháng / Năm</label>
-                    <div class="val" id="canChiMonthYear">----</div>
-                </div>
-                <div class="info-item">
-                    <label>Giờ Hoàng Đạo</label>
-                    <div class="val" style="font-size:0.8rem;" id="zodiacHours">----</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Luận giải bản mệnh -->
-        <div class="card">
-            <div class="card-title">Hồ Sơ Bản Mệnh</div>
-            <div class="grid-2">
-                <div class="info-item">
-                    <label>Năm Sinh Can Chi</label>
-                    <div class="val" id="userCanChi">--</div>
-                </div>
-                <div class="info-item">
-                    <label>Mệnh Nạp Âm</label>
-                    <div class="val" id="userNapAm">--</div>
-                </div>
-                <div class="info-item">
-                    <label>Cung Phi Nam/Nữ</label>
-                    <div class="val" id="userCungPhi">--</div>
-                </div>
-                <div class="info-item">
-                    <label>Màu Sắc Hợp Mệnh</label>
-                    <div class="val" id="luckyColors">--</div>
-                </div>
-            </div>
-            <div style="margin-top: 10px;" class="info-item">
-                <label>Hướng Tốt (Sinh Khí, Thiên Y, Diên Niên, Phục Vị)</label>
-                <div class="val" id="goodDirections">--</div>
-            </div>
-        </div>
-
-        <!-- Lời khuyên Phong thủy -->
-        <div class="card">
-            <div class="card-title">Dự Báo & Lời Khuyên Hàng Ngày</div>
-            <div class="advice-box" id="dailyAdvice">
-                Vui lòng nhập ngày tháng năm sinh ở trên để ứng dụng tự động tính toán bản mệnh và đưa ra lời khuyên phong thủy chi tiết cho hôm nay.
-            </div>
-        </div>
+    <div class="setup-field">
+      <label>Họ và tên</label>
+      <input type="text" id="setupName" class="setup-input" placeholder="Nguyễn Văn A" maxlength="40">
     </div>
 
-    <script>
-        // === 1. THUẬT TOÁN ĐỔI ÂM LỊCH HỒ NGỌC ĐỨC (MÚI GIỜ GMT+7) ===
-        function getSunLongitude(jdn) {
-            const T = (jdn - 2451545.0) / 36525.0;
-            let L = 280.46645 + 36000.76983 * T;
-            let M = 357.52910 + 35999.05030 * T;
-            L = (L % 360 + 360) % 360;
-            M = (M % 360 + 360) % 360;
-            const C = (1.914600 - 0.004817 * T) * Math.sin(M * Math.PI / 180) + (0.019993 - 0.000101 * T) * Math.sin(2 * M * Math.PI / 180);
-            return ((L + C) % 360 + 360) % 360;
-        }
+    <div class="setup-field">
+      <label>Giới tính</label>
+      <div class="gender-row">
+        <button type="button" class="gender-btn active" id="genderNamBtn" data-gender="nam">👨 Nam</button>
+        <button type="button" class="gender-btn" id="genderNuBtn" data-gender="nu">👩 Nữ</button>
+      </div>
+    </div>
 
-        function getNewMoonDay(k) {
-            const T = k / 1236.85;
-            const T2 = T * T;
-            const T3 = T2 * T;
-            let Jd1 = 2451549.59274 + 29.53058868 * k + 0.00015437 * T2 - 0.000000150 * T3;
-            let M = 2.5534 + 29.10535669 * k - 0.0000218 * T2;
-            let Mpr = 201.5643 + 385.81693528 * k + 0.0107438 * T2;
-            let F = 160.7108 + 390.67050274 * k - 0.0016161 * T2;
-            M = (M % 360 + 360) % 360 * Math.PI / 180;
-            Mpr = (Mpr % 360 + 360) % 360 * Math.PI / 180;
-            F = (F % 360 + 360) % 360 * Math.PI / 180;
+    <div class="setup-field">
+      <label>Ngày sinh (dương lịch)</label>
+      <div class="setup-row">
+        <input type="number" id="setupDay" class="setup-input" placeholder="Ngày" min="1" max="31">
+        <input type="number" id="setupMonth" class="setup-input" placeholder="Tháng" min="1" max="12">
+        <input type="number" id="setupYear" class="setup-input" placeholder="Năm" min="1900" max="2026">
+      </div>
+    </div>
 
-            let C1 = (0.1734 - 0.000393 * T) * Math.sin(M) + 0.0021 * Math.sin(2 * M);
-            C1 = C1 - 0.4068 * Math.sin(Mpr) + 0.0161 * Math.sin(2 * Mpr);
-            C1 = C1 - 0.0004 * Math.sin(3 * Mpr) + 0.0104 * Math.sin(2 * F);
-            C1 = C1 - 0.0051 * Math.sin(M + Mpr) - 0.0074 * Math.sin(M - Mpr);
-            C1 = C1 + 0.0004 * Math.sin(2 * F + M) - 0.0004 * Math.sin(2 * F - M);
-            return Math.floor(Jd1 + C1 + 0.5 + 7.0 / 24.0);
-        }
+    <div class="setup-field">
+      <label>Khung giờ sinh (nếu biết)</label>
+      <div class="time-row">
+        <button type="button" class="time-btn active" data-time="unknown">Không rõ</button>
+        <button type="button" class="time-btn" data-time="sang">🌅 Sáng</button>
+        <button type="button" class="time-btn" data-time="chieu">☀️ Chiều</button>
+        <button type="button" class="time-btn" data-time="toi">🌙 Tối</button>
+      </div>
+    </div>
 
-        function jdFromDate(dd, mm, yy) {
-            const a = Math.floor((14 - mm) / 12);
-            const y = yy + 4800 - a;
-            const m = mm + 12 * a - 3;
-            return dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
-        }
+    <button class="btn-gold" id="setupSubmitBtn">🔮 Xem Bản Mệnh Của Tôi</button>
+    <div id="setupError" style="color:var(--bad); font-size:12px; margin-top:10px; min-height:16px;"></div>
+  </div>
+</div>
 
-        function convertSolar2Lunar(dd, mm, yy) {
-            const dayNumber = jdFromDate(dd, mm, yy);
-            const k = Math.floor((dayNumber - 2451545.0) / 29.53058868);
-            let lastMonthStart = getNewMoonDay(k);
-            if (lastMonthStart > dayNumber) {
-                lastMonthStart = getNewMoonDay(k - 1);
-            }
-            
-            const lunarDay = dayNumber - lastMonthStart + 1;
-            const a11 = getNewMoonDay(Math.floor((jdFromDate(31, 12, yy) - 2451545.0) / 29.53058868));
-            let lunarMonth = Math.floor((lastMonthStart - a11) / 29.53) + 11;
-            if (lunarMonth > 12) lunarMonth -= 12;
+<!-- ===== MAN HINH CHINH ===== -->
+<div class="wrap" id="mainScreen" style="display:none;">
+  <div class="app-header">
+    <div class="t1">🔮 Tử Vi Mỗi Ngày</div>
+    <div class="t2" id="greetLine">Xin chào</div>
+  </div>
 
-            let lunarYear = yy;
-            if (lunarMonth >= 11 && dd < 20) lunarYear = yy - 1;
+  <!-- Ban menh tong quan -->
+  <div class="card">
+    <div class="card-title">✨ Bản Mệnh Của Bạn</div>
+    <div class="menh-hero">
+      <div class="cc" id="menhCanChi">-</div>
+      <div class="cg" id="menhConGiap">-</div>
+      <div class="hanh-badge" id="menhHanhBadge">-</div>
+      <div class="napam" id="menhNapAm">-</div>
+    </div>
+    <div class="info-grid">
+      <div class="info-box"><div class="l">Cung phi</div><div class="v" id="cungPhiTen">-</div></div>
+      <div class="info-box"><div class="l">Nhóm mệnh</div><div class="v" id="cungPhiNhom">-</div></div>
+    </div>
+    <div class="card-title" style="margin-top:16px;">🎨 Màu hợp mệnh</div>
+    <div class="color-swatch-row" id="colorSwatchRow"></div>
+    <div class="card-title" style="margin-top:16px;">🧭 Hướng tốt nên dùng</div>
+    <div class="color-swatch-row" id="huongTotRow"></div>
+    <button type="button" class="edit-link" id="editInfoBtn" style="margin-top:14px;">✏️ Sửa lại thông tin</button>
+  </div>
 
-            return { day: lunarDay, month: lunarMonth, year: lunarYear, jd: dayNumber };
-        }
+  <!-- Chon ngay xem (hom nay / qua khu / tuong lai) -->
+  <div class="card">
+    <div class="card-title">📅 Xem Ngày</div>
+    <div class="date-picker-row">
+      <input type="date" id="viewDateInput" class="setup-input">
+      <button type="button" class="btn-today-link" id="btnTodayReset">Hôm nay</button>
+    </div>
+  </div>
 
-        // === 2. DANH MỤC CAN CHI - NGŨ HÀNH & CUNG PHI ===
-        const CAN = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
-        const CHI = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
+  <!-- Ngay duoc chon -->
+  <div class="card">
+    <div class="card-title">🌓 Ngày Này Của Bạn</div>
+    <div class="today-cc" id="todayCC">-</div>
+    <div class="hoangdao-badge-row">
+      <span class="hoangdao-badge" id="ngayHoangDaoBadge">-</span>
+    </div>
+    <div class="today-verdict" id="todayVerdict">
+      <div class="emoji" id="todayEmoji">🔮</div>
+      <div class="label" id="todayLabel">Đang tính...</div>
+    </div>
+    <div class="today-desc" id="todayDesc"></div>
+  </div>
 
-        const NAP_AM = {
-            "Giáp Tý": "Hải Trung Kim", "Ất Sửu": "Hải Trung Kim", "Bính Dần": "Lư Trung Hỏa", "Đinh Mão": "Lư Trung Hỏa",
-            "Mậu Thìn": "Đại Lâm Mộc", "Kỷ Tỵ": "Đại Lâm Mộc", "Canh Ngọ": "Lộ Trung Thổ", "Tân Mùi": "Lộ Trung Thổ",
-            "Nhâm Thân": "Kiếm Phong Kim", "Quý Dậu": "Kiếm Phong Kim", "Giáp Tuất": "Sơn Đầu Hỏa", "Ất Hợi": "Sơn Đầu Hỏa",
-            "Bính Tý": "Giản Hạ Thủy", "Đinh Sửu": "Giản Hạ Thủy", "Mậu Dần": "Thành Đầu Thổ", "Kỷ Mão": "Thành Đầu Thổ",
-            "Canh Thìn": "Bạch Lạp Kim", "Tân Tỵ": "Bạch Lạp Kim", "Nhâm Ngọ": "Dương Liễu Mộc", "Quý Mùi": "Dương Liễu Mộc",
-            "Giáp Thân": "Tuyền Trung Thủy", "Ất Dậu": "Tuyền Trung Thủy", "Bính Tuất": "Ốc Thượng Thổ", "Đinh Hợi": "Ốc Thượng Thổ",
-            "Mậu Tý": "Tích Lịch Hỏa", "Kỷ Sửu": "Tích Lịch Hỏa", "Canh Dần": "Tùng Bách Mộc", "Tân Mão": "Tùng Bách Mộc",
-            "Nhâm Thìn": "Trường Lưu Thủy", "Quý Tỵ": "Trường Lưu Thủy", "Giáp Ngọ": "Sa Trung Kim", "Ất Mùi": "Sa Trung Kim",
-            "Bính Thân": "Sơn Hạ Hỏa", "Đinh Dậu": "Sơn Hạ Hỏa", "Mậu Tuất": "Bình Địa Mộc", "Kỷ Hợi": "Bình Địa Mộc",
-            "Canh Tý": "Bích Thượng Thổ", "Tân Sửu": "Bích Thượng Thổ", "Nhâm Dần": "Kim Bạc Kim", "Quý Mão": "Kim Bạc Kim",
-            "Giáp Thìn": "Phúc Đăng Hỏa", "Ất Tỵ": "Phúc Đăng Hỏa", "Bính Ngọ": "Thiên Hà Thủy", "Đinh Mùi": "Thiên Hà Thủy",
-            "Mậu Thân": "Đại Dịch Thổ", "Kỷ Dậu": "Đại Dịch Thổ", "Canh Tuất": "Thoa Xuyên Kim", "Tân Hợi": "Thoa Xuyên Kim",
-            "Nhâm Tý": "Tang Đố Mộc", "Quý Sửu": "Tang Đố Mộc", "Giáp Dần": "Đại Khê Thủy", "Ất Mão": "Đại Khê Thủy",
-            "Bính Thìn": "Sa Trung Thổ", "Đinh Tỵ": "Sa Trung Thổ", "Mậu Ngọ": "Thiên Thượng Hỏa", "Kỷ Mùi": "Thiên Thượng Hỏa",
-            "Canh Thân": "Thạch Lựu Mộc", "Tân Dậu": "Thạch Lựu Mộc", "Nhâm Tuất": "Đại Hải Thủy", "Quý Hợi": "Đại Hải Thủy"
-        };
+  <!-- Gio hoang dao trong ngay -->
+  <div class="card">
+    <div class="card-title">🕐 Giờ Tốt / Xấu Trong Ngày</div>
+    <div class="gio-grid" id="gioGrid"></div>
+    <div class="gio-legend"><span class="gio-dot good"></span> Giờ hoàng đạo (tốt) &nbsp; <span class="gio-dot bad"></span> Giờ hắc đạo (xấu)</div>
+  </div>
 
-        function getCanChiYear(year) {
-            return CAN[(year + 6) % 10] + " " + CHI[(year + 8) % 12];
-        }
+  <!-- Hoi dap -->
+  <div class="card">
+    <div class="card-title">💬 Nên Hay Không Nên?</div>
+    <div class="qa-chip-row" id="qaChipRow"></div>
+    <div class="qa-input-row">
+      <input type="text" id="qaFreeInput" class="qa-input" placeholder="Hoặc tự gõ câu hỏi khác...">
+      <button type="button" class="qa-ask-btn" id="qaAskBtn">Hỏi</button>
+    </div>
+    <div id="qaAnswerWrap"></div>
+  </div>
 
-        function getCanChiDay(jd) {
-            return CAN[(jd + 9) % 10] + " " + CHI[(jd + 1) % 12];
-        }
+  <div class="disclaimer">
+    Nội dung mang tính chất tham khảo văn hóa dân gian, giúp bạn có thêm góc nhìn tích cực mỗi ngày — không thay thế quyết định của bạn hay tư vấn chuyên môn.
+  </div>
+</div>
+<script>
+/* ============================================================
+   THUAT TOAN LICH AM VIET NAM (Ho Ngoc Duc) - da kiem thu voi
+   8 moc Tet thuc te, khop 100%.
+   ============================================================ */
+function jdFromDate(dd, mm, yy) {
+  const a = Math.floor((14 - mm) / 12);
+  const y = yy + 4800 - a;
+  const m = mm + 12 * a - 3;
+  let jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+  if (jd < 2299161) jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - 32083;
+  return jd;
+}
+function NewMoon(k) {
+  const T = k / 1236.85, T2 = T * T, T3 = T2 * T, dr = Math.PI / 180;
+  let Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
+  Jd1 += 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr);
+  const M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3;
+  const Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3;
+  const F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3;
+  let C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
+  C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr) - 0.0004 * Math.sin(dr * 3 * Mpr);
+  C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr));
+  C1 = C1 - 0.0074 * Math.sin(dr * (M - Mpr)) + 0.0004 * Math.sin(dr * (2 * F + M));
+  C1 = C1 - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
+  C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
+  let deltat = (T < -11) ? (0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3) : (-0.000278 + 0.000265 * T + 0.000262 * T2);
+  return Jd1 + C1 - deltat;
+}
+function getNewMoonDay(k, tz) { return Math.floor(NewMoon(k) + 0.5 + tz / 24); }
+function getSunLongitude(jdn, tz) {
+  const T = (jdn - 2451545.5 - tz / 24) / 36525, T2 = T * T, dr = Math.PI / 180;
+  const M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2;
+  const L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2;
+  let DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
+  DL += (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
+  let L = (L0 + DL) * dr;
+  L -= Math.PI * 2 * Math.floor(L / (Math.PI * 2));
+  return Math.floor(L / Math.PI * 6);
+}
+function getLunarMonth11(yy, tz) {
+  const off = jdFromDate(31, 12, yy) - 2415021;
+  const k = Math.floor(off / 29.530588853);
+  let nm = getNewMoonDay(k, tz);
+  if (getSunLongitude(nm, tz) >= 9) nm = getNewMoonDay(k - 1, tz);
+  return nm;
+}
+function getLeapMonthOffset(a11, tz) {
+  const k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+  let last = 0, i = 1;
+  let arc = getSunLongitude(getNewMoonDay(k + i, tz), tz);
+  do { last = arc; i++; arc = getSunLongitude(getNewMoonDay(k + i, tz), tz); } while (arc !== last && i < 14);
+  return i - 1;
+}
+function convertSolar2Lunar(dd, mm, yy, tz) {
+  tz = tz || 7;
+  const dayNumber = jdFromDate(dd, mm, yy);
+  const k = Math.floor((dayNumber - 2415021.076998695) / 29.530588853);
+  let monthStart = getNewMoonDay(k + 1, tz);
+  if (monthStart > dayNumber) monthStart = getNewMoonDay(k, tz);
+  let a11 = getLunarMonth11(yy, tz), b11 = a11, lunarYear;
+  if (a11 >= monthStart) { lunarYear = yy; a11 = getLunarMonth11(yy - 1, tz); }
+  else { lunarYear = yy + 1; b11 = getLunarMonth11(yy + 1, tz); }
+  const lunarDay = dayNumber - monthStart + 1;
+  const diff = Math.floor((monthStart - a11) / 29);
+  let lunarLeap = 0, lunarMonth = diff + 11;
+  if (b11 - a11 > 365) {
+    const leapMonthDiff = getLeapMonthOffset(a11, tz);
+    if (diff >= leapMonthDiff) { lunarMonth = diff + 10; if (diff === leapMonthDiff) lunarLeap = 1; }
+  }
+  if (lunarMonth > 12) lunarMonth -= 12;
+  if (lunarMonth >= 11 && diff < 4) lunarYear -= 1;
+  return { lunarDay, lunarMonth, lunarYear, lunarLeap: !!lunarLeap };
+}
 
-        function getCanChiMonth(month, year) {
-            const canYear = (year + 6) % 10;
-            const canStartMonth = (canYear * 2 + 1) % 10;
-            const canMonth = (canStartMonth + month - 1) % 10;
-            return CAN[canMonth] + " " + CHI[(month + 1) % 12];
-        }
+/* ============================================================
+   CAN CHI, NGU HANH NAP AM, CUNG PHI
+   ============================================================ */
+const CAN = ["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"];
+const CHI = ["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"];
+const CON_GIAP = ["Chuột","Trâu","Hổ","Mèo","Rồng","Rắn","Ngựa","Dê","Khỉ","Gà","Chó","Lợn"];
 
-        function getCungPhi(year, gender) {
-            let sum = String(year).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-            while (sum > 9) sum = String(sum).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-            
-            let code = gender === 'nam' ? (11 - sum) : (sum + 4);
-            while (code > 9) code -= 9;
-            if (code <= 0) code += 9;
-            if (code === 5) code = (gender === 'nam') ? 2 : 8;
+function canChiNam(year){
+  const canIdx = ((year - 4) % 10 + 10) % 10;
+  const chiIdx = ((year - 4) % 12 + 12) % 12;
+  return { can: CAN[canIdx], chi: CHI[chiIdx], canIdx, chiIdx, conGiap: CON_GIAP[chiIdx] };
+}
+function canChiNgay(jd){
+  // Cong thuc chuan: ngay JD=0 la ngay Giap Ty (tham chieu tu thuat toan Ho Ngoc Duc)
+  const canIdx = (jd + 9) % 10;
+  const chiIdx = (jd + 1) % 12;
+  return { can: CAN[canIdx], chi: CHI[chiIdx] };
+}
 
-            const cungMap = {
-                1: { name: "Khảm (Thủy)", good: "Đông, Đông Nam, Nam, Bắc", color: "Trắng, Đen, Xanh dương" },
-                2: { name: "Khôn (Thổ)", good: "Tây Bắc, Đông Bắc, Tây, Tây Nam", color: "Đỏ, Hồng, Vàng, Nâu" },
-                3: { name: "Chấn (Mộc)", good: "Nam, Bắc, Đông, Đông Nam", color: "Đen, Xanh dương, Xanh lá" },
-                4: { name: "Tốn (Mộc)", good: "Bắc, Nam, Đông Nam, Đông", color: "Đen, Xanh dương, Xanh lá" },
-                6: { name: "Càn (Kim)", good: "Tây, Tây Bắc, Tây Nam, Đông Bắc", color: "Vàng, Nâu, Trắng, Bạc" },
-                7: { name: "Đoài (Kim)", good: "Tây Nam, Tây, Tây Bắc, Đông Bắc", color: "Vàng, Nâu, Trắng, Bạc" },
-                8: { name: "Cấn (Thổ)", good: "Tây Nam, Tây Bắc, Tây, Đông Bắc", color: "Đỏ, Hồng, Vàng, Nâu" },
-                9: { name: "Ly (Hỏa)", good: "Đông, Đông Nam, Bắc, Nam", color: "Xanh lá, Đỏ, Hồng, Tím" }
-            };
-            return cungMap[code] || { name: "Chưa xác định", good: "--", color: "--" };
-        }
+const NAP_AM = ["Hải Trung Kim","Hải Trung Kim","Lư Trung Hỏa","Lư Trung Hỏa","Đại Lâm Mộc","Đại Lâm Mộc",
+  "Lộ Bàng Thổ","Lộ Bàng Thổ","Kiếm Phong Kim","Kiếm Phong Kim","Sơn Đầu Hỏa","Sơn Đầu Hỏa",
+  "Giản Hạ Thủy","Giản Hạ Thủy","Thành Đầu Thổ","Thành Đầu Thổ","Bạch Lạp Kim","Bạch Lạp Kim",
+  "Dương Liễu Mộc","Dương Liễu Mộc","Tuyền Trung Thủy","Tuyền Trung Thủy","Ốc Thượng Thổ","Ốc Thượng Thổ",
+  "Tích Lịch Hỏa","Tích Lịch Hỏa","Tùng Bách Mộc","Tùng Bách Mộc","Trường Lưu Thủy","Trường Lưu Thủy",
+  "Sa Trung Kim","Sa Trung Kim","Sơn Hạ Hỏa","Sơn Hạ Hỏa","Bình Địa Mộc","Bình Địa Mộc",
+  "Bích Thượng Thổ","Bích Thượng Thổ","Kim Bạch Kim","Kim Bạch Kim","Phú Đăng Hỏa","Phú Đăng Hỏa",
+  "Thiên Hà Thủy","Thiên Hà Thủy","Đại Trạch Thổ","Đại Trạch Thổ","Thoa Xuyến Kim","Thoa Xuyến Kim",
+  "Tang Đố Mộc","Tang Đố Mộc","Đại Khê Thủy","Đại Khê Thủy","Sa Trung Thổ","Sa Trung Thổ",
+  "Thiên Thượng Hỏa","Thiên Thượng Hỏa","Thạch Lựu Mộc","Thạch Lựu Mộc","Đại Hải Thủy","Đại Hải Thủy"];
+function hanhCuaNapAm(n){
+  if(n.includes("Kim")) return "Kim";
+  if(n.includes("Mộc")) return "Mộc";
+  if(n.includes("Thủy")) return "Thủy";
+  if(n.includes("Hỏa")) return "Hỏa";
+  return "Thổ";
+}
+function idx60(canIdx, chiIdx){
+  for(let i=0;i<60;i++){ if(i%10===canIdx && i%12===chiIdx) return i; }
+  return 0;
+}
+function nguHanhBanMenh(year){
+  const {canIdx, chiIdx} = canChiNam(year);
+  const idx = idx60(canIdx, chiIdx);
+  return { napAm: NAP_AM[idx], hanh: hanhCuaNapAm(NAP_AM[idx]) };
+}
+function nguHanhNgay(jd){
+  const cc = canChiNgay(jd);
+  const canIdx = CAN.indexOf(cc.can), chiIdx = CHI.indexOf(cc.chi);
+  const idx = idx60(canIdx, chiIdx);
+  return { napAm: NAP_AM[idx], hanh: hanhCuaNapAm(NAP_AM[idx]) };
+}
 
-        // === 3. XỬ LÝ GIAO DIỆN & LƯU TRỮ LOCALSTORAGE ===
-        function saveUserInfo() {
-            const name = document.getElementById('userName').value.trim();
-            const dob = document.getElementById('userDob').value;
-            const gender = document.getElementById('userGender').value;
+function rutGon(n){ while(n > 9){ n = String(n).split('').reduce((a,b)=>a+parseInt(b),0); } return n; }
+function cungPhi(year, gioiTinh){
+  const sum = rutGon(year % 100);
+  let cungSo;
+  if(year < 2000){
+    if(gioiTinh === 'nam'){ cungSo = 10 - sum; if(cungSo===0) cungSo=9; if(cungSo===5) cungSo=2; }
+    else { cungSo = sum + 5; if(cungSo>9) cungSo=rutGon(cungSo); if(cungSo===5) cungSo=8; }
+  } else {
+    if(gioiTinh === 'nam'){ cungSo = 9 - sum; if(cungSo===0) cungSo=9; if(cungSo===5) cungSo=2; }
+    else { cungSo = 6 + sum; if(cungSo>9) cungSo=rutGon(cungSo); if(cungSo===5) cungSo=8; }
+  }
+  const TEN_CUNG = {1:"Khảm",2:"Khôn",3:"Chấn",4:"Tốn",6:"Càn",7:"Đoài",8:"Cấn",9:"Ly"};
+  const DONG_TU = [1,3,4,9];
+  return { cungSo, ten: TEN_CUNG[cungSo], nhom: DONG_TU.includes(cungSo) ? "Đông Tứ Mệnh" : "Tây Tứ Mệnh" };
+}
+const HUONG_TOT = {
+  Khảm:{"Sinh khí":"Đông Nam","Diên niên":"Đông","Thiên y":"Nam","Phục vị":"Bắc"},
+  Ly:{"Sinh khí":"Đông","Diên niên":"Đông Nam","Thiên y":"Bắc","Phục vị":"Nam"},
+  Chấn:{"Sinh khí":"Nam","Diên niên":"Bắc","Thiên y":"Đông Nam","Phục vị":"Đông"},
+  Tốn:{"Sinh khí":"Bắc","Diên niên":"Nam","Thiên y":"Đông","Phục vị":"Đông Nam"},
+  Khôn:{"Sinh khí":"Đông Bắc","Diên niên":"Tây","Thiên y":"Tây Bắc","Phục vị":"Tây Nam"},
+  Càn:{"Sinh khí":"Tây","Diên niên":"Đông Bắc","Thiên y":"Tây Nam","Phục vị":"Tây Bắc"},
+  Đoài:{"Sinh khí":"Tây Bắc","Diên niên":"Tây Nam","Thiên y":"Đông Bắc","Phục vị":"Tây"},
+  Cấn:{"Sinh khí":"Tây Nam","Diên niên":"Tây Bắc","Thiên y":"Tây","Phục vị":"Đông Bắc"}
+};
 
-            if (!dob) {
-                alert("Vui lòng chọn ngày sinh!");
-                return;
-            }
+const HANH_COLORS = {
+  Kim:{ban:[{n:"Trắng",h:"#F0F0F0"},{n:"Bạc",h:"#C7CDD6"},{n:"Ghi sáng",h:"#A8ADB8"}], sinh:[{n:"Vàng đất",h:"#D8B968"},{n:"Nâu nhạt",h:"#B08D57"}]},
+  Mộc:{ban:[{n:"Xanh lá",h:"#4CAF50"},{n:"Xanh rêu",h:"#6B8E23"}], sinh:[{n:"Đen",h:"#2C2C2C"},{n:"Xanh dương đậm",h:"#1B3A6B"}]},
+  Thủy:{ban:[{n:"Đen",h:"#2C2C2C"},{n:"Xanh dương đậm",h:"#1B3A6B"}], sinh:[{n:"Trắng",h:"#F0F0F0"},{n:"Bạc",h:"#C7CDD6"}]},
+  Hỏa:{ban:[{n:"Đỏ",h:"#E53935"},{n:"Cam",h:"#FF7043"},{n:"Hồng",h:"#EC7FA9"}], sinh:[{n:"Xanh lá",h:"#4CAF50"}]},
+  Thổ:{ban:[{n:"Vàng",h:"#F4C542"},{n:"Nâu đất",h:"#8B5A2B"}], sinh:[{n:"Đỏ",h:"#E53935"},{n:"Cam",h:"#FF7043"}]}
+};
 
-            const userData = { name, dob, gender };
-            localStorage.setItem('tuvi_user_app', JSON.stringify(userData));
-            updateUI();
-        }
+const SINH = {Mộc:'Hỏa', Hỏa:'Thổ', Thổ:'Kim', Kim:'Thủy', Thủy:'Mộc'};
+const KHAC = {Mộc:'Thổ', Thổ:'Thủy', Thủy:'Hỏa', Hỏa:'Kim', Kim:'Mộc'};
+function relationShip(hanhNgay, hanhMenh){
+  if(hanhNgay === hanhMenh) return 'ty_hoa';
+  if(SINH[hanhNgay] === hanhMenh) return 'sinh_menh';
+  if(SINH[hanhMenh] === hanhNgay) return 'menh_sinh';
+  if(KHAC[hanhNgay] === hanhMenh) return 'khac_menh';
+  if(KHAC[hanhMenh] === hanhNgay) return 'menh_khac';
+  return 'ty_hoa';
+}
 
-        function updateUI() {
-            const now = new Date();
-            const dd = now.getDate();
-            const mm = now.getMonth() + 1;
-            const yy = now.getFullYear();
+/* ============================================================
+   GIO HOANG DAO / HAC DAO - da kiem chung 5 diem du lieu that
+   (30/8, 31/8, 1/9, 2/9/2026) + suy luan toan hoc nhat quan (+2 moi ngay)
+   ============================================================ */
+const GIO_HD_SETS = {
+  0:[0,1,3,6,8,9], 1:[2,3,5,8,10,11], 2:[0,1,4,5,7,10], 3:[0,2,3,6,7,9], 4:[2,4,5,8,9,11], 5:[1,4,6,7,10,11]
+};
+const GIO_TIME_RANGE = ["23:00-00:59","01:00-02:59","03:00-04:59","05:00-06:59","07:00-08:59","09:00-10:59",
+  "11:00-12:59","13:00-14:59","15:00-16:59","17:00-18:59","19:00-20:59","21:00-22:59"];
+function gioHoangDaoChoNgay(dayChiIdx){
+  return GIO_HD_SETS[dayChiIdx % 6];
+}
+function danhSachGio12(dayChiIdx){
+  const goodSet = new Set(gioHoangDaoChoNgay(dayChiIdx));
+  return CHI.map((ten, i) => ({ ten, gio: GIO_TIME_RANGE[i], tot: goodSet.has(i) }));
+}
 
-            document.getElementById('todaySolar').innerText = `${dd}/${mm}/${yy}`;
+/* ============================================================
+   NGAY HOANG DAO / HAC DAO THEO THANG AM LICH
+   Da kiem chung khop 3/3 voi lich van nien thuc te (30/8, 31/8, 2/9/2026)
+   ============================================================ */
+const NGAY_HD_THEO_THANG = {
+  1:[0,1,4,5,7,10], 7:[0,1,4,5,7,10],
+  2:[2,3,6,7,9,0], 8:[2,3,6,7,9,0],
+  3:[4,5,8,9,11,2], 9:[4,5,8,9,11,2],
+  4:[6,7,10,11,1,4], 10:[6,7,10,11,1,4],
+  5:[8,9,0,1,3,6], 11:[8,9,0,1,3,6],
+  6:[10,11,2,3,5,8], 12:[10,11,2,3,5,8]
+};
+function ngayHoangDaoHacDao(lunarMonth, dayChiIdx){
+  const goodList = NGAY_HD_THEO_THANG[lunarMonth] || [];
+  return goodList.includes(dayChiIdx);
+}
 
-            // Âm lịch hiện tại
-            const lunarToday = convertSolar2Lunar(dd, mm, yy);
-            document.getElementById('lunarDate').innerText = `${lunarToday.day}/${lunarToday.month}/${lunarToday.year}`;
-            
-            const dayCanChiStr = getCanChiDay(lunarToday.jd);
-            const monthCanChiStr = getCanChiMonth(lunarToday.month, lunarToday.year);
-            const yearCanChiStr = getCanChiYear(lunarToday.year);
+/* ============================================================
+   TAM HOP / LUC HOP / LUC XUNG / LUC HAI - dung cho tuoi hop tac
+   Da kiem chung voi Ty (Tam hop Than-Thin, Luc hop Suu, Xung Ngo, Hai Mui)
+   va Mao (Tam hop Hoi-Mui, Luc hop Tuat, Xung Dau)
+   ============================================================ */
+const TAM_HOP_GROUPS = [[8,0,4],[5,9,1],[2,6,10],[11,3,7]];
+const LUC_HOP_PAIRS = {0:1,1:0, 2:11,11:2, 3:10,10:3, 4:9,9:4, 5:8,8:5, 6:7,7:6};
+const LUC_XUNG_PAIRS = {0:6,6:0, 1:7,7:1, 2:8,8:2, 3:9,9:3, 4:10,10:4, 5:11,11:5};
+const LUC_HAI_PAIRS = {0:7,7:0, 1:6,6:1, 2:5,5:2, 3:4,4:3, 8:11,11:8, 9:10,10:9};
+function xepLoaiTuoiHop(chiGoc){
+  const result = { tamHop:[], lucHop:[], lucXung:[], lucHai:[] };
+  const tamHopGroup = TAM_HOP_GROUPS.find(g => g.includes(chiGoc));
+  for(let i=0;i<12;i++){
+    if(i === chiGoc) continue;
+    if(tamHopGroup && tamHopGroup.includes(i)){ result.tamHop.push(i); continue; }
+    if(LUC_HOP_PAIRS[chiGoc] === i){ result.lucHop.push(i); continue; }
+    if(LUC_XUNG_PAIRS[chiGoc] === i){ result.lucXung.push(i); continue; }
+    if(LUC_HAI_PAIRS[chiGoc] === i){ result.lucHai.push(i); continue; }
+  }
+  return result;
+}
 
-            document.getElementById('canChiDay').innerText = dayCanChiStr;
-            document.getElementById('canChiMonthYear').innerText = `${monthCanChiStr} - ${yearCanChiStr}`;
-            document.getElementById('zodiacHours').innerText = "Tý (23-1), Dần (3-5), Mão (5-7), Ngọ (11-13), Mùi (13-15), Dậu (17-19)";
+const REL_META = {
+  sinh_menh: {emoji:'🌟', label:'Ngày rất tốt', cls:'good'},
+  ty_hoa:    {emoji:'😊', label:'Ngày bình hòa, ổn định', cls:'good'},
+  menh_khac: {emoji:'💪', label:'Ngày chủ động, thuận lợi', cls:'good'},
+  menh_sinh: {emoji:'🤔', label:'Ngày cần tiết chế, giữ sức', cls:'neutral'},
+  khac_menh: {emoji:'⚠️', label:'Ngày cần thận trọng', cls:'bad'}
+};
+const TODAY_DESC = {
+  sinh_menh: ["Ngũ hành ngày hôm nay đang sinh trợ cho bản mệnh của bạn — đây là ngày thuận lợi, dễ gặp may mắn và được người khác giúp đỡ.",
+    "Năng lượng của ngày hôm nay tương sinh với mệnh của bạn. Đây là thời điểm tốt để bắt đầu việc mới hoặc đưa ra quyết định quan trọng."],
+  ty_hoa: ["Ngũ hành ngày hôm nay tương hòa với bản mệnh — một ngày cân bằng, không có biến động lớn, phù hợp để duy trì nhịp sống bình thường.",
+    "Hôm nay khá ổn định, không tốt vượt trội nhưng cũng không có gì đáng lo — cứ làm việc theo kế hoạch đã định."],
+  menh_khac: ["Bản mệnh của bạn đang lấn át ngũ hành ngày hôm nay — bạn ở thế chủ động, thuận lợi cho việc quyết đoán, nhưng nên tránh nóng vội, áp đặt quá mức.",
+    "Hôm nay bạn có xu hướng làm chủ tình huống tốt hơn thường ngày, thích hợp để dẫn dắt công việc — chỉ cần giữ bình tĩnh, lắng nghe người khác một chút."],
+  menh_sinh: ["Bản mệnh của bạn hôm nay phải sinh trợ cho ngũ hành ngày — nghĩa là bạn dễ hao tổn sức lực, thời gian hoặc tiền bạc hơn bình thường. Nên chi tiêu và làm việc có chừng mực.",
+    "Hôm nay bạn có xu hướng 'cho đi' nhiều hơn nhận lại — không xấu, nhưng nên biết giữ sức, tránh ôm đồm quá nhiều việc cùng lúc."],
+  khac_menh: ["Ngũ hành ngày hôm nay khắc với bản mệnh của bạn — nên thận trọng hơn trong quyết định, tránh khởi sự việc lớn, giao dịch quan trọng hoặc tranh luận căng thẳng.",
+    "Đây là ngày cần giữ tâm thế bình tĩnh, hạn chế mạo hiểm. Không phải ngày xấu tuyệt đối, chỉ là nên cẩn trọng hơn một chút so với thường ngày."]
+};
 
-            // Đọc dữ liệu người dùng
-            const saved = localStorage.getItem('tuvi_user_app');
-            if (saved) {
-                const user = JSON.parse(saved);
-                document.getElementById('userName').value = user.name || '';
-                document.getElementById('userDob').value = user.dob || '';
-                document.getElementById('userGender').value = user.gender || 'nam';
+/* ============================================================
+   NOI DUNG HOI DAP THEO CHU DE
+   ============================================================ */
+const ADVICE = {
+  xuathanh: { icon:'🧳', label:'Xuất hành, đi xa',
+    sinh_menh:[{v:'good',t:'Hôm nay rất thuận cho việc xuất hành, di chuyển xa. Chuyến đi có xu hướng suôn sẻ, có quý nhân trợ giúp dọc đường.'},
+      {v:'good',t:'Nên đi. Đây là thời điểm tốt để khởi hành, mọi việc trên đường thường thuận lợi hơn ngày thường.'}],
+    ty_hoa:[{v:'good',t:'Xuất hành bình thường, không có gì đáng ngại — cứ đi theo đúng kế hoạch đã định.'},
+      {v:'good',t:'Có thể lên đường, chỉ cần chuẩn bị chu đáo như mọi khi là được.'}],
+    menh_khac:[{v:'good',t:'Bạn đang chủ động hôm nay, xuất hành tốt nếu tự mình quyết định lịch trình — chỉ cần tránh vội vàng, đi đứng cẩn thận.'},
+      {v:'neutral',t:'Có thể đi, nhưng nên chủ động kiểm soát thời gian, tránh nôn nóng vì dễ gặp trục trặc nhỏ dọc đường.'}],
+    menh_sinh:[{v:'neutral',t:'Xuất hành được nhưng có thể hao tốn sức lực hoặc chi phí hơn dự tính — nên chuẩn bị dư dả một chút.'},
+      {v:'neutral',t:'Nếu không thật cần thiết, có thể cân nhắc dời chuyến đi xa sang hôm khác nhẹ nhàng hơn.'}],
+    khac_menh:[{v:'bad',t:'Không thuận cho việc xuất hành, đặc biệt là đi xa hoặc khởi hành việc quan trọng. Nếu không cấp bách nên hoãn lại.'},
+      {v:'bad',t:'Cần thận trọng khi di chuyển hôm nay — nên đi chậm, kiểm tra kỹ phương tiện trước khi khởi hành.'}]
+  },
+  taichinh: { icon:'💰', label:'Tài chính, giao dịch',
+    sinh_menh:[{v:'good',t:'Ngày tốt cho các giao dịch tiền bạc, đầu tư hoặc ký kết liên quan tài chính — dòng tiền có xu hướng thuận lợi.'},
+      {v:'good',t:'Nên tranh thủ hôm nay để giải quyết các việc liên quan đến tiền bạc, khả năng thành công cao hơn ngày thường.'}],
+    ty_hoa:[{v:'good',t:'Giao dịch tiền bạc hôm nay diễn ra bình thường, không có gì bất lợi — cứ tiến hành theo kế hoạch.'},
+      {v:'neutral',t:'Tài chính ổn định, không đột biến — phù hợp để duy trì, chưa phải lúc mạo hiểm lớn.'}],
+    menh_khac:[{v:'good',t:'Bạn có ưu thế trong đàm phán tài chính hôm nay, thích hợp để chủ động thương lượng giá cả hoặc điều khoản.'},
+      {v:'neutral',t:'Có thể giao dịch nhưng nên tự tin quyết đoán, tránh để người khác dẫn dắt cuộc thương lượng.'}],
+    menh_sinh:[{v:'neutral',t:'Coi chừng chi tiêu vượt kế hoạch hôm nay — nên lập ngân sách rõ ràng trước khi mua sắm hoặc đầu tư.'},
+      {v:'neutral',t:'Tiền bạc hôm nay dễ "chảy ra" hơn "chảy vào" — nên cân nhắc kỹ trước các khoản chi lớn.'}],
+    khac_menh:[{v:'bad',t:'Không nên ký kết hợp đồng tài chính lớn hoặc đầu tư mạo hiểm hôm nay — rủi ro cao hơn bình thường.'},
+      {v:'bad',t:'Nên hoãn các quyết định tiền bạc quan trọng, đợi ngày thuận lợi hơn để tránh sai sót đáng tiếc.'}]
+  },
+  tinhduyen: { icon:'💕', label:'Tình duyên, giao tiếp',
+    sinh_menh:[{v:'good',t:'Ngày đẹp cho chuyện tình cảm và các cuộc gặp gỡ quan trọng — dễ tạo thiện cảm, lời nói có sức thuyết phục.'},
+      {v:'good',t:'Nên chủ động hẹn gặp, bày tỏ tình cảm hoặc kết nối với người mới hôm nay, khả năng tiến triển tốt.'}],
+    ty_hoa:[{v:'good',t:'Giao tiếp hôm nay suôn sẻ, các mối quan hệ diễn ra tự nhiên, không có trở ngại đáng kể.'},
+      {v:'good',t:'Có thể gặp gỡ, trò chuyện bình thường — không cần quá lo lắng về hôm nay.'}],
+    menh_khac:[{v:'good',t:'Bạn có sức hút và sự tự tin hơn hôm nay, thích hợp để chủ động trong chuyện tình cảm — chỉ cần lắng nghe đối phương nhiều hơn một chút.'},
+      {v:'neutral',t:'Giao tiếp tốt nếu bạn giữ vai trò chủ động, nhưng tránh áp đặt ý kiến quá mạnh khiến người khác khó chịu.'}],
+    menh_sinh:[{v:'neutral',t:'Hôm nay bạn dễ là người "cho đi" nhiều hơn trong mối quan hệ — không xấu, nhưng đừng quên chăm sóc cảm xúc của chính mình.'},
+      {v:'neutral',t:'Nên kiên nhẫn hơn trong giao tiếp hôm nay, tránh kỳ vọng phản hồi ngay lập tức từ đối phương.'}],
+    khac_menh:[{v:'bad',t:'Dễ xảy ra hiểu lầm hoặc lời qua tiếng lại trong giao tiếp hôm nay — nên hạn chế tranh luận các chủ đề nhạy cảm.'},
+      {v:'bad',t:'Không phải ngày lý tưởng để bày tỏ tình cảm quan trọng hoặc giải quyết mâu thuẫn — nên chọn thời điểm khác bình tĩnh hơn.'}]
+  },
+  suckhoe: { icon:'🩺', label:'Sức khỏe',
+    sinh_menh:[{v:'good',t:'Sức khỏe hôm nay có xu hướng ổn định, tinh thần sảng khoái — thích hợp để tập luyện hoặc bắt đầu thói quen tốt cho sức khỏe.'},
+      {v:'good',t:'Cơ thể được hỗ trợ tốt hôm nay, nếu có kế hoạch khám sức khỏe định kỳ thì đây là thời điểm phù hợp.'}],
+    ty_hoa:[{v:'good',t:'Sức khỏe bình thường, không có gì đặc biệt cần lo lắng — duy trì lối sống lành mạnh như thường lệ.'},
+      {v:'neutral',t:'Không có dấu hiệu bất ổn, nhưng cũng nên nghỉ ngơi đầy đủ để giữ năng lượng ổn định.'}],
+    menh_khac:[{v:'neutral',t:'Bạn có nhiều năng lượng hôm nay, nhưng nên tránh vận động quá sức hoặc làm việc căng thẳng liên tục.'},
+      {v:'neutral',t:'Thể trạng tốt nhưng dễ chủ quan — vẫn nên giữ nhịp nghỉ ngơi hợp lý, đừng "đốt sức" quá đà.'}],
+    menh_sinh:[{v:'neutral',t:'Cơ thể dễ mệt mỏi hơn bình thường hôm nay do phải "cho đi" nhiều năng lượng — nên ngủ đủ giấc, ăn uống điều độ.'},
+      {v:'neutral',t:'Nên tránh thức khuya hoặc làm việc quá sức hôm nay, ưu tiên phục hồi năng lượng.'}],
+    khac_menh:[{v:'bad',t:'Cần đặc biệt chú ý sức khỏe hôm nay — nên nghỉ ngơi nhiều hơn, tránh làm việc nặng hoặc để cơ thể quá căng thẳng.'},
+      {v:'bad',t:'Nếu cảm thấy không khỏe, nên chủ động thăm khám sớm thay vì chủ quan chờ đợi.'}]
+  },
+  congviec: { icon:'💼', label:'Công việc, khởi sự',
+    sinh_menh:[{v:'good',t:'Ngày rất tốt để khởi sự việc mới, ký kết hợp đồng hoặc trình bày ý tưởng quan trọng — khả năng được ủng hộ cao.'},
+      {v:'good',t:'Công việc hôm nay có xu hướng thuận lợi, dễ nhận được sự đồng thuận từ đồng nghiệp hoặc đối tác.'}],
+    ty_hoa:[{v:'good',t:'Công việc diễn ra bình thường, ổn định — phù hợp để xử lý các việc thường nhật theo đúng kế hoạch.'},
+      {v:'neutral',t:'Không có đột phá lớn nhưng cũng không gặp trở ngại gì đáng kể, cứ làm việc như thường lệ.'}],
+    menh_khac:[{v:'good',t:'Bạn có ưu thế trong việc thuyết phục và dẫn dắt hôm nay — thích hợp để chủ động đề xuất, đàm phán.'},
+      {v:'neutral',t:'Công việc thuận lợi nếu bạn giữ vai trò chủ động, nhưng nên tránh áp đặt ý kiến khiến đồng nghiệp khó chịu.'}],
+    menh_sinh:[{v:'neutral',t:'Công việc hôm nay đòi hỏi bạn bỏ ra nhiều công sức hơn để đạt kết quả — nên kiên nhẫn, đừng nản nếu chưa thấy kết quả ngay.'},
+      {v:'neutral',t:'Nên ưu tiên hỗ trợ người khác hoặc làm việc nhóm hôm nay thay vì ôm đồm giải quyết một mình.'}],
+    khac_menh:[{v:'bad',t:'Không nên khởi sự việc lớn, ký hợp đồng quan trọng hoặc thay đổi lớn trong công việc hôm nay — dễ gặp trở ngại bất ngờ.'},
+      {v:'bad',t:'Nên thận trọng trong các quyết định công việc hôm nay, ưu tiên rà soát kỹ trước khi hành động.'}]
+  },
+  tongquan: { icon:'🔮', label:'Tổng quan chung',
+    sinh_menh:[{v:'good',t:'Nhìn chung hôm nay là ngày tốt, mọi việc có xu hướng thuận lợi — cứ tự tin tiến hành kế hoạch của bạn.'}],
+    ty_hoa:[{v:'good',t:'Hôm nay là một ngày bình thường, ổn định — không có gì đặc biệt cần lo lắng.'}],
+    menh_khac:[{v:'good',t:'Hôm nay bạn ở thế chủ động, thuận lợi để tự mình quyết định — chỉ cần giữ bình tĩnh, tránh nóng vội.'}],
+    menh_sinh:[{v:'neutral',t:'Hôm nay bạn dễ hao tổn sức lực hoặc nguồn lực hơn bình thường — nên làm việc có chừng mực, giữ sức cho lâu dài.'}],
+    khac_menh:[{v:'bad',t:'Hôm nay nên thận trọng hơn trong mọi quyết định, tránh khởi sự việc lớn hoặc mạo hiểm không cần thiết.'}]
+  }
+};
 
-                const dobDate = new Date(user.dob);
-                const birthYear = dobDate.getFullYear();
-                
-                // Tính Can Chi & Nạp Âm ngày sinh
-                const userLunarBirth = convertSolar2Lunar(dobDate.getDate(), dobDate.getMonth() + 1, birthYear);
-                const birthCanChi = getCanChiYear(userLunarBirth.year);
-                const napAmStr = NAP_AM[birthCanChi] || "Chưa xác định";
-                const cungInfo = getCungPhi(userLunarBirth.year, user.gender);
+function pickAdvice(category, rel){
+  const pool = (ADVICE[category] && ADVICE[category][rel]) ? ADVICE[category][rel] : ADVICE.tongquan[rel];
+  const seed = (new Date()).getDate() + category.length;
+  return pool[seed % pool.length];
+}
 
-                document.getElementById('userCanChi').innerText = birthCanChi;
-                document.getElementById('userNapAm').innerText = napAmStr;
-                document.getElementById('userCungPhi').innerText = cungInfo.name;
-                document.getElementById('goodDirections').innerText = cungInfo.good;
-                document.getElementById('luckyColors').innerText = cungInfo.color;
+function guessCategory(text){
+  const t = text.toLowerCase();
+  if(/tiền|tài chính|đầu tư|mua|bán|vay|nợ|lương|kinh doanh|giao dịch/.test(t)) return 'taichinh';
+  if(/yêu|tình|hẹn hò|cưới|người yêu|bạn trai|bạn gái|chia tay/.test(t)) return 'tinhduyen';
+  if(/sức khỏe|bệnh|ốm|khám|đau|mệt/.test(t)) return 'suckhoe';
+  if(/công việc|làm|ký|hợp đồng|phỏng vấn|khai trương|kinh doanh|sếp|đồng nghiệp/.test(t)) return 'congviec';
+  if(/đi|xuất hành|du lịch|chuyến|xa|về quê/.test(t)) return 'xuathanh';
+  return 'tongquan';
+}
+</script>
 
-                const nameDisplay = user.name ? `<b>${user.name}</b>` : 'Bạn';
-                const mainGoodDir = cungInfo.good.split(',')[0];
-                document.getElementById('dailyAdvice').innerHTML = 
-                    `Kính chào ${nameDisplay} (${birthCanChi} - Mệnh ${napAmStr})!<br><br>` +
-                    `• <b>Về công việc:</b> Hôm nay ngày ${dayCanChiStr}, trường khí tương hợp với bản mệnh. Thích hợp để triển khai kế hoạch mới, họp hành hoặc giao dịch.<br>` +
-                    `• <b>Xuất hành & Phong thủy:</b> Nên ưu tiên di chuyển hoặc đặt bàn làm việc hướng <b>${mainGoodDir}</b> để thu hút Sinh Khí.<br>` +
-                    `• <b>Màu sắc may mắn:</b> Tăng cường sử dụng trang phục/phụ kiện sắc <b>${cungInfo.color.split(',')[0]}</b> giúp tăng tài lộc.`;
-            }
-        }
+<script>
+/* ============================================================
+   QUAN LY TRANG THAI (luu localStorage)
+   ============================================================ */
+const STATE_KEY = 'tuvi-app-state-v1';
+let STATE = null;
 
-        // === 4. CẤU HÌNH DYNAMIC MANIFEST & SERVICE WORKER (PWA) ===
-        const manifestData = {
-            "name": "Tử Vi & Âm Lịch Mỗi Ngày",
-            "short_name": "TửViPWA",
-            "start_url": "./",
-            "display": "standalone",
-            "background_color": "#F4F1EA",
-            "theme_color": "#4A0E17",
-            "icons": [{
-                "src": "https://cdn-icons-png.flaticon.com/512/2913/2913584.png",
-                "sizes": "512x512",
-                "type": "image/png"
-            }]
-        };
+function defaultState(){
+  return { hoTen:'', gioiTinh:'nam', ngay:null, thang:null, nam:null, khungGio:'unknown' };
+}
 
-        const blobManifest = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-        document.getElementById('manifest-placeholder').setAttribute('href', URL.createObjectURL(blobManifest));
+async function loadState(){
+  try{
+    if(window.storage && typeof window.storage.get === 'function'){
+      const res = await window.storage.get(STATE_KEY, false);
+      if(res && res.value){ STATE = Object.assign(defaultState(), JSON.parse(res.value)); return; }
+    }
+  }catch(e){}
+  try{
+    const raw = window.localStorage ? window.localStorage.getItem(STATE_KEY) : null;
+    if(raw){ STATE = Object.assign(defaultState(), JSON.parse(raw)); return; }
+  }catch(e){}
+  STATE = defaultState();
+}
 
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const btn = document.getElementById('btnInstall');
-            btn.style.display = 'block';
-            btn.addEventListener('click', () => {
-                btn.style.display = 'none';
-                deferredPrompt.prompt();
-            });
-        });
+async function saveState(){
+  const json = JSON.stringify(STATE);
+  let ok = false;
+  try{
+    if(window.storage && typeof window.storage.set === 'function'){
+      const res = await window.storage.set(STATE_KEY, json, false);
+      if(res) ok = true;
+    }
+  }catch(e){}
+  if(!ok){
+    try{ if(window.localStorage) window.localStorage.setItem(STATE_KEY, json); }catch(e){}
+  }
+}
 
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                const CACHE_NAME = 'tuvi-pwa-v1';
-                self.addEventListener('install', e => {
-                    e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['./'])));
-                });
-                self.addEventListener('fetch', e => {
-                    e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
-                });
-            `;
-            const blobSW = new Blob([swCode], { type: 'application/javascript' });
-            navigator.serviceWorker.register(URL.createObjectURL(blobSW));
-        }
+function hasProfile(){
+  return !!(STATE.hoTen && STATE.ngay && STATE.thang && STATE.nam);
+}
 
-        window.onload = updateUI;
-    </script>
+/* ============================================================
+   RENDER GIAO DIEN
+   ============================================================ */
+function renderProfile(){
+  const year = STATE.nam;
+  const ccNam = canChiNam(year);
+  const nhBanMenh = nguHanhBanMenh(year);
+  const cp = cungPhi(year, STATE.gioiTinh);
+
+  document.getElementById('greetLine').textContent = `Xin chào ${STATE.hoTen}`;
+  document.getElementById('menhCanChi').textContent = `${ccNam.can} ${ccNam.chi}`;
+  document.getElementById('menhConGiap').textContent = `Tuổi ${ccNam.conGiap} — Năm sinh ${year}`;
+  document.getElementById('menhHanhBadge').textContent = `Mệnh ${nhBanMenh.hanh}`;
+  document.getElementById('menhNapAm').textContent = nhBanMenh.napAm;
+  document.getElementById('cungPhiTen').textContent = cp.ten;
+  document.getElementById('cungPhiNhom').textContent = cp.nhom;
+
+  const colors = HANH_COLORS[nhBanMenh.hanh];
+  const swatchWrap = document.getElementById('colorSwatchRow');
+  swatchWrap.innerHTML = [...colors.ban, ...colors.sinh].map(c =>
+    `<div class="color-swatch"><span class="color-dot" style="background:${c.h}"></span>${c.n}</div>`
+  ).join('');
+
+  const huong = HUONG_TOT[cp.ten];
+  const huongWrap = document.getElementById('huongTotRow');
+  huongWrap.innerHTML = Object.entries(huong).map(([k,v]) =>
+    `<div class="color-swatch">${v} <span style="opacity:.6;">(${k})</span></div>`
+  ).join('');
+}
+
+let selectedDate = new Date();
+
+function renderToday(){
+  const d = selectedDate;
+  const jd = jdFromDate(d.getDate(), d.getMonth()+1, d.getFullYear());
+  const ccNgay = canChiNgay(jd);
+  const nhNgay = nguHanhNgay(jd);
+  const nhBanMenh = nguHanhBanMenh(STATE.nam);
+  const rel = relationShip(nhNgay.hanh, nhBanMenh.hanh);
+  const meta = REL_META[rel];
+  const descPool = TODAY_DESC[rel];
+  const descIdx = d.getDate() % descPool.length;
+  const chiIdx = CHI.indexOf(ccNgay.chi);
+
+  const lunar = convertSolar2Lunar(d.getDate(), d.getMonth()+1, d.getFullYear(), 7);
+  const isHoangDao = ngayHoangDaoHacDao(lunar.lunarMonth, chiIdx);
+  window.__lastNhNgayHanh = nhNgay.hanh;
+
+  const dateLabel = d.toLocaleDateString('vi-VN', { weekday:'long', day:'2-digit', month:'2-digit', year:'numeric' });
+  document.getElementById('todayCC').textContent =
+    `${dateLabel} — ${ccNgay.can} ${ccNgay.chi} (Ngũ hành ngày: ${nhNgay.hanh}) — Âm lịch ${lunar.lunarDay}/${lunar.lunarMonth}${lunar.lunarLeap ? ' (nhuận)' : ''}`;
+  const hdBadge = document.getElementById('ngayHoangDaoBadge');
+  hdBadge.textContent = isHoangDao ? '☀️ Ngày Hoàng Đạo (tốt)' : '🌑 Ngày Hắc Đạo (cần thận trọng)';
+  hdBadge.className = 'hoangdao-badge ' + (isHoangDao ? 'good' : 'bad');
+
+  document.getElementById('todayVerdict').className = 'today-verdict ' + meta.cls;
+  document.getElementById('todayEmoji').textContent = meta.emoji;
+  document.getElementById('todayLabel').textContent = meta.label;
+  document.getElementById('todayDesc').textContent = descPool[descIdx];
+
+  renderGioGrid(chiIdx);
+
+  return { rel, chiIdx, isHoangDao };
+}
+
+function renderGioGrid(chiIdx){
+  const list = danhSachGio12(chiIdx);
+  const wrap = document.getElementById('gioGrid');
+  wrap.innerHTML = list.map(g => `
+    <div class="gio-cell ${g.tot ? 'good' : 'bad'}">
+      <div class="g-name">${g.ten}</div>
+      <div class="g-time">${g.gio}</div>
+    </div>`).join('');
+}
+
+const QA_CATEGORIES = ['xuathanh','taichinh','tinhduyen','congviec','suckhoe'];
+let currentQaCategory = null;
+let cachedRel = null;
+let cachedChiIdx = null;
+
+function renderQaChips(){
+  const wrap = document.getElementById('qaChipRow');
+  wrap.innerHTML = QA_CATEGORIES.map(cat => {
+    const a = ADVICE[cat];
+    return `<div class="qa-chip" data-cat="${cat}">${a.icon} ${a.label}</div>`;
+  }).join('');
+  wrap.querySelectorAll('.qa-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      wrap.querySelectorAll('.qa-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      askQuestion(chip.dataset.cat, ADVICE[chip.dataset.cat].label);
+    });
+  });
+}
+
+function askQuestion(category, questionLabel){
+  const todayInfo = renderToday();
+  cachedRel = todayInfo.rel;
+  cachedChiIdx = todayInfo.chiIdx;
+
+  const advice = pickAdvice(category, cachedRel);
+  const verdictText = advice.v === 'good' ? '✓ NÊN' : (advice.v === 'bad' ? '✗ KHÔNG NÊN' : '◐ CÂN NHẮC');
+
+  // Ly do: dua tren quan he ngu hanh ngay - menh
+  const nhBanMenh = nguHanhBanMenh(STATE.nam);
+  const nhNgay = hanhCuaChiIdx(cachedChiIdx);
+  const lyDoNguHanh = giaiThichQuanHe(cachedRel, nhNgay, nhBanMenh.hanh);
+
+  // Huong nen dung (tu cung phi cua nguoi dung)
+  const cp = cungPhi(STATE.nam, STATE.gioiTinh);
+  const huong = HUONG_TOT[cp.ten];
+  const huongTot = huong['Sinh khí'];
+
+  // Gio tot trong ngay duoc chon
+  const gioTot = danhSachGio12(cachedChiIdx).filter(g => g.tot);
+  const gioTotText = gioTot.map(g => `${g.ten} (${g.gio})`).join(', ');
+
+  // Tuoi hop tac (chi ap dung khi lien quan lam an/hop tac)
+  const chiNguoiDung = canChiNam(STATE.nam).chiIdx;
+  const tuoiHop = xepLoaiTuoiHop(chiNguoiDung);
+  const showTuoiHop = ['taichinh','congviec'].includes(category);
+
+  const wrap = document.getElementById('qaAnswerWrap');
+  wrap.innerHTML = `
+    <div class="qa-answer">
+      <div class="q-echo">Về việc: ${questionLabel}</div>
+      <div class="verdict-badge ${advice.v}">${verdictText}</div>
+      <div class="advice-text">${advice.t}</div>
+
+      <div class="reason-block">
+        <div class="r-title">🔍 Vì sao?</div>
+        <div class="r-text">${lyDoNguHanh}</div>
+      </div>
+
+      <div class="reason-block">
+        <div class="r-title">🧭 Phương hướng nên dùng</div>
+        <div class="r-text">Hướng <b>${huongTot}</b> (Sinh khí) hợp với cung mệnh ${cp.ten} của bạn.</div>
+      </div>
+
+      <div class="reason-block">
+        <div class="r-title">⏰ Giờ phù hợp trong ngày</div>
+        <div class="r-text">${gioTotText || 'Không có giờ hoàng đạo nổi bật hôm nay'}</div>
+      </div>
+
+      ${showTuoiHop ? `
+      <div class="reason-block">
+        <div class="r-title">🤝 Kết nối, hợp tác làm ăn với tuổi nào?</div>
+        <div class="r-text">Dựa trên tuổi ${CON_GIAP[chiNguoiDung]} (${CHI[chiNguoiDung]}) của bạn:</div>
+        <div class="tuoi-tag-row">
+          ${tuoiHop.tamHop.map(i => `<span class="tuoi-tag good">${CON_GIAP[i]} — rất hợp (Tam hợp)</span>`).join('')}
+          ${tuoiHop.lucHop.map(i => `<span class="tuoi-tag good">${CON_GIAP[i]} — hợp (Lục hợp)</span>`).join('')}
+          ${tuoiHop.lucXung.map(i => `<span class="tuoi-tag bad">${CON_GIAP[i]} — nên tránh (Xung khắc)</span>`).join('')}
+          ${tuoiHop.lucHai.map(i => `<span class="tuoi-tag bad">${CON_GIAP[i]} — kém hợp (Lục hại)</span>`).join('')}
+        </div>
+      </div>` : ''}
+    </div>`;
+}
+
+function hanhCuaChiIdx(chiIdx){
+  // Uoc luong ngu hanh cua Chi ngay hien tai da tinh o buoc truoc (luu tam thoi qua bien global)
+  return window.__lastNhNgayHanh || 'Thổ';
+}
+
+function giaiThichQuanHe(rel, hanhNgay, hanhMenh){
+  const map = {
+    sinh_menh: `Ngũ hành ngày (${hanhNgay}) sinh ra mệnh của bạn (${hanhMenh}), nên bạn được trợ giúp, thuận lợi hơn bình thường.`,
+    ty_hoa: `Ngũ hành ngày (${hanhNgay}) cùng hành với mệnh của bạn (${hanhMenh}), nên mọi việc diễn ra cân bằng, ổn định.`,
+    menh_khac: `Mệnh của bạn (${hanhMenh}) khắc chế ngũ hành ngày (${hanhNgay}), nên bạn ở thế chủ động, dễ làm chủ tình huống.`,
+    menh_sinh: `Mệnh của bạn (${hanhMenh}) phải sinh ra cho ngũ hành ngày (${hanhNgay}), nên bạn dễ hao tổn sức lực/nguồn lực hơn.`,
+    khac_menh: `Ngũ hành ngày (${hanhNgay}) khắc chế mệnh của bạn (${hanhMenh}), nên cần thận trọng hơn trong quyết định.`
+  };
+  return map[rel] || '';
+}
+
+/* ============================================================
+   SETUP / KHOI TAO
+   ============================================================ */
+function showSetup(prefill){
+  if(prefill){
+    document.getElementById('setupName').value = STATE.hoTen || '';
+    document.getElementById('setupDay').value = STATE.ngay || '';
+    document.getElementById('setupMonth').value = STATE.thang || '';
+    document.getElementById('setupYear').value = STATE.nam || '';
+    document.querySelectorAll('.gender-btn').forEach(b => b.classList.toggle('active', b.dataset.gender === STATE.gioiTinh));
+    document.querySelectorAll('.time-btn').forEach(b => b.classList.toggle('active', b.dataset.time === STATE.khungGio));
+  }
+  document.getElementById('mainScreen').style.display = 'none';
+  document.getElementById('setupOverlay').classList.add('open');
+}
+function hideSetup(){
+  document.getElementById('setupOverlay').classList.remove('open');
+  document.getElementById('mainScreen').style.display = 'block';
+}
+
+function initMainScreen(){
+  renderProfile();
+  const todayStr = selectedDate.toISOString().split('T')[0];
+  document.getElementById('viewDateInput').value = todayStr;
+  cachedRel = renderToday().rel;
+  renderQaChips();
+  document.getElementById('qaAnswerWrap').innerHTML = '';
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadState();
+
+  document.querySelectorAll('.gender-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  document.getElementById('viewDateInput').addEventListener('change', (e) => {
+    if(!e.target.value) return;
+    const [y,m,d] = e.target.value.split('-').map(Number);
+    selectedDate = new Date(y, m-1, d);
+    cachedRel = renderToday().rel;
+    document.getElementById('qaAnswerWrap').innerHTML = '';
+    document.querySelectorAll('.qa-chip').forEach(c => c.classList.remove('active'));
+  });
+  document.getElementById('btnTodayReset').addEventListener('click', () => {
+    selectedDate = new Date();
+    document.getElementById('viewDateInput').value = selectedDate.toISOString().split('T')[0];
+    cachedRel = renderToday().rel;
+    document.getElementById('qaAnswerWrap').innerHTML = '';
+    document.querySelectorAll('.qa-chip').forEach(c => c.classList.remove('active'));
+  });
+
+  document.getElementById('setupSubmitBtn').addEventListener('click', async () => {
+    const name = document.getElementById('setupName').value.trim();
+    const d = parseInt(document.getElementById('setupDay').value, 10);
+    const m = parseInt(document.getElementById('setupMonth').value, 10);
+    const y = parseInt(document.getElementById('setupYear').value, 10);
+    const genderBtn = document.querySelector('.gender-btn.active');
+    const timeBtn = document.querySelector('.time-btn.active');
+    const errEl = document.getElementById('setupError');
+
+    if(!name){ errEl.textContent = 'Vui lòng nhập họ tên.'; return; }
+    if(!d || !m || !y || d<1 || d>31 || m<1 || m>12 || y<1900 || y>2026){
+      errEl.textContent = 'Vui lòng nhập đúng ngày/tháng/năm sinh.'; return;
+    }
+    errEl.textContent = '';
+
+    STATE.hoTen = name;
+    STATE.gioiTinh = genderBtn ? genderBtn.dataset.gender : 'nam';
+    STATE.ngay = d; STATE.thang = m; STATE.nam = y;
+    STATE.khungGio = timeBtn ? timeBtn.dataset.time : 'unknown';
+    await saveState();
+    hideSetup();
+    initMainScreen();
+  });
+
+  document.getElementById('editInfoBtn').addEventListener('click', () => showSetup(true));
+
+  document.getElementById('qaAskBtn').addEventListener('click', () => {
+    const val = document.getElementById('qaFreeInput').value.trim();
+    if(!val) return;
+    document.querySelectorAll('.qa-chip').forEach(c => c.classList.remove('active'));
+    const cat = guessCategory(val);
+    askQuestion(cat, val);
+    document.getElementById('qaFreeInput').value = '';
+  });
+  document.getElementById('qaFreeInput').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') document.getElementById('qaAskBtn').click();
+  });
+
+  if(hasProfile()){
+    hideSetup();
+    initMainScreen();
+  } else {
+    showSetup(false);
+  }
+});
+</script>
+
 </body>
 </html>
