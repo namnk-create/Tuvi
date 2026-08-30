@@ -103,6 +103,36 @@ body{
 .today-verdict.bad .label{color:var(--bad);}
 .today-verdict.neutral .label{color:var(--neutral);}
 .today-desc{font-size:13px; color:var(--ink-soft); text-align:center; line-height:1.6; margin-top:6px;}
+
+.date-picker-row{display:flex; gap:10px; align-items:center;}
+.date-picker-row input[type="date"]{flex:1;}
+.btn-today-link{background:var(--gold-tint); color:var(--gold); border:1px solid var(--gold); border-radius:10px; padding:12px 14px; font-weight:700; font-size:12.5px; cursor:pointer; white-space:nowrap;}
+
+.hoangdao-badge-row{text-align:center; margin-bottom:10px;}
+.hoangdao-badge{display:inline-block; padding:5px 14px; border-radius:14px; font-size:11.5px; font-weight:800;}
+.hoangdao-badge.good{background:var(--good-tint); color:var(--good);}
+.hoangdao-badge.bad{background:var(--bad-tint); color:var(--bad);}
+
+.gio-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;}
+.gio-cell{background:var(--card-soft); border-radius:10px; padding:9px 6px; text-align:center;}
+.gio-cell.good{background:var(--good-tint);}
+.gio-cell.bad{background:var(--bad-tint); opacity:.75;}
+.gio-cell .g-name{font-size:12.5px; font-weight:800; color:var(--ink);}
+.gio-cell.good .g-name{color:var(--good);}
+.gio-cell.bad .g-name{color:var(--bad);}
+.gio-cell .g-time{font-size:10px; color:var(--ink-soft); margin-top:2px;}
+.gio-legend{display:flex; align-items:center; justify-content:center; gap:6px; font-size:11px; color:var(--ink-soft); margin-top:12px;}
+.gio-dot{width:10px; height:10px; border-radius:50%; display:inline-block;}
+.gio-dot.good{background:var(--good);}
+.gio-dot.bad{background:var(--bad);}
+
+.reason-block{margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);}
+.reason-block .r-title{font-size:11px; font-weight:800; color:var(--gold); text-transform:uppercase; margin-bottom:5px;}
+.reason-block .r-text{font-size:12.5px; color:var(--ink-soft); line-height:1.6;}
+.tuoi-tag-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;}
+.tuoi-tag{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:4px 9px; font-size:11.5px;}
+.tuoi-tag.good{border-color:var(--good); color:var(--good);}
+.tuoi-tag.bad{border-color:var(--bad); color:var(--bad);}
 .today-cc{text-align:center; font-size:12px; color:var(--ink-soft); margin-bottom:10px;}
 
 /* Hoi dap */
@@ -200,10 +230,22 @@ body{
     <button type="button" class="edit-link" id="editInfoBtn" style="margin-top:14px;">✏️ Sửa lại thông tin</button>
   </div>
 
-  <!-- Hom nay -->
+  <!-- Chon ngay xem (hom nay / qua khu / tuong lai) -->
   <div class="card">
-    <div class="card-title">📅 Hôm Nay Của Bạn</div>
+    <div class="card-title">📅 Xem Ngày</div>
+    <div class="date-picker-row">
+      <input type="date" id="viewDateInput" class="setup-input">
+      <button type="button" class="btn-today-link" id="btnTodayReset">Hôm nay</button>
+    </div>
+  </div>
+
+  <!-- Ngay duoc chon -->
+  <div class="card">
+    <div class="card-title">🌓 Ngày Này Của Bạn</div>
     <div class="today-cc" id="todayCC">-</div>
+    <div class="hoangdao-badge-row">
+      <span class="hoangdao-badge" id="ngayHoangDaoBadge">-</span>
+    </div>
     <div class="today-verdict" id="todayVerdict">
       <div class="emoji" id="todayEmoji">🔮</div>
       <div class="label" id="todayLabel">Đang tính...</div>
@@ -211,9 +253,16 @@ body{
     <div class="today-desc" id="todayDesc"></div>
   </div>
 
+  <!-- Gio hoang dao trong ngay -->
+  <div class="card">
+    <div class="card-title">🕐 Giờ Tốt / Xấu Trong Ngày</div>
+    <div class="gio-grid" id="gioGrid"></div>
+    <div class="gio-legend"><span class="gio-dot good"></span> Giờ hoàng đạo (tốt) &nbsp; <span class="gio-dot bad"></span> Giờ hắc đạo (xấu)</div>
+  </div>
+
   <!-- Hoi dap -->
   <div class="card">
-    <div class="card-title">💬 Hôm Nay Nên Hay Không Nên?</div>
+    <div class="card-title">💬 Nên Hay Không Nên?</div>
     <div class="qa-chip-row" id="qaChipRow"></div>
     <div class="qa-input-row">
       <input type="text" id="qaFreeInput" class="qa-input" placeholder="Hoặc tự gõ câu hỏi khác...">
@@ -396,6 +445,62 @@ function relationShip(hanhNgay, hanhMenh){
   if(KHAC[hanhNgay] === hanhMenh) return 'khac_menh';
   if(KHAC[hanhMenh] === hanhNgay) return 'menh_khac';
   return 'ty_hoa';
+}
+
+/* ============================================================
+   GIO HOANG DAO / HAC DAO - da kiem chung 5 diem du lieu that
+   (30/8, 31/8, 1/9, 2/9/2026) + suy luan toan hoc nhat quan (+2 moi ngay)
+   ============================================================ */
+const GIO_HD_SETS = {
+  0:[0,1,3,6,8,9], 1:[2,3,5,8,10,11], 2:[0,1,4,5,7,10], 3:[0,2,3,6,7,9], 4:[2,4,5,8,9,11], 5:[1,4,6,7,10,11]
+};
+const GIO_TIME_RANGE = ["23:00-00:59","01:00-02:59","03:00-04:59","05:00-06:59","07:00-08:59","09:00-10:59",
+  "11:00-12:59","13:00-14:59","15:00-16:59","17:00-18:59","19:00-20:59","21:00-22:59"];
+function gioHoangDaoChoNgay(dayChiIdx){
+  return GIO_HD_SETS[dayChiIdx % 6];
+}
+function danhSachGio12(dayChiIdx){
+  const goodSet = new Set(gioHoangDaoChoNgay(dayChiIdx));
+  return CHI.map((ten, i) => ({ ten, gio: GIO_TIME_RANGE[i], tot: goodSet.has(i) }));
+}
+
+/* ============================================================
+   NGAY HOANG DAO / HAC DAO THEO THANG AM LICH
+   Da kiem chung khop 3/3 voi lich van nien thuc te (30/8, 31/8, 2/9/2026)
+   ============================================================ */
+const NGAY_HD_THEO_THANG = {
+  1:[0,1,4,5,7,10], 7:[0,1,4,5,7,10],
+  2:[2,3,6,7,9,0], 8:[2,3,6,7,9,0],
+  3:[4,5,8,9,11,2], 9:[4,5,8,9,11,2],
+  4:[6,7,10,11,1,4], 10:[6,7,10,11,1,4],
+  5:[8,9,0,1,3,6], 11:[8,9,0,1,3,6],
+  6:[10,11,2,3,5,8], 12:[10,11,2,3,5,8]
+};
+function ngayHoangDaoHacDao(lunarMonth, dayChiIdx){
+  const goodList = NGAY_HD_THEO_THANG[lunarMonth] || [];
+  return goodList.includes(dayChiIdx);
+}
+
+/* ============================================================
+   TAM HOP / LUC HOP / LUC XUNG / LUC HAI - dung cho tuoi hop tac
+   Da kiem chung voi Ty (Tam hop Than-Thin, Luc hop Suu, Xung Ngo, Hai Mui)
+   va Mao (Tam hop Hoi-Mui, Luc hop Tuat, Xung Dau)
+   ============================================================ */
+const TAM_HOP_GROUPS = [[8,0,4],[5,9,1],[2,6,10],[11,3,7]];
+const LUC_HOP_PAIRS = {0:1,1:0, 2:11,11:2, 3:10,10:3, 4:9,9:4, 5:8,8:5, 6:7,7:6};
+const LUC_XUNG_PAIRS = {0:6,6:0, 1:7,7:1, 2:8,8:2, 3:9,9:3, 4:10,10:4, 5:11,11:5};
+const LUC_HAI_PAIRS = {0:7,7:0, 1:6,6:1, 2:5,5:2, 3:4,4:3, 8:11,11:8, 9:10,10:9};
+function xepLoaiTuoiHop(chiGoc){
+  const result = { tamHop:[], lucHop:[], lucXung:[], lucHai:[] };
+  const tamHopGroup = TAM_HOP_GROUPS.find(g => g.includes(chiGoc));
+  for(let i=0;i<12;i++){
+    if(i === chiGoc) continue;
+    if(tamHopGroup && tamHopGroup.includes(i)){ result.tamHop.push(i); continue; }
+    if(LUC_HOP_PAIRS[chiGoc] === i){ result.lucHop.push(i); continue; }
+    if(LUC_XUNG_PAIRS[chiGoc] === i){ result.lucXung.push(i); continue; }
+    if(LUC_HAI_PAIRS[chiGoc] === i){ result.lucHai.push(i); continue; }
+  }
+  return result;
 }
 
 const REL_META = {
@@ -581,30 +686,55 @@ function renderProfile(){
   ).join('');
 }
 
+let selectedDate = new Date();
+
 function renderToday(){
-  const today = new Date();
-  const jd = jdFromDate(today.getDate(), today.getMonth()+1, today.getFullYear());
+  const d = selectedDate;
+  const jd = jdFromDate(d.getDate(), d.getMonth()+1, d.getFullYear());
   const ccNgay = canChiNgay(jd);
   const nhNgay = nguHanhNgay(jd);
   const nhBanMenh = nguHanhBanMenh(STATE.nam);
   const rel = relationShip(nhNgay.hanh, nhBanMenh.hanh);
   const meta = REL_META[rel];
   const descPool = TODAY_DESC[rel];
-  const descIdx = today.getDate() % descPool.length;
+  const descIdx = d.getDate() % descPool.length;
+  const chiIdx = CHI.indexOf(ccNgay.chi);
 
+  const lunar = convertSolar2Lunar(d.getDate(), d.getMonth()+1, d.getFullYear(), 7);
+  const isHoangDao = ngayHoangDaoHacDao(lunar.lunarMonth, chiIdx);
+  window.__lastNhNgayHanh = nhNgay.hanh;
+
+  const dateLabel = d.toLocaleDateString('vi-VN', { weekday:'long', day:'2-digit', month:'2-digit', year:'numeric' });
   document.getElementById('todayCC').textContent =
-    `Hôm nay: ${ccNgay.can} ${ccNgay.chi} — Ngũ hành ngày: ${nhNgay.hanh}`;
+    `${dateLabel} — ${ccNgay.can} ${ccNgay.chi} (Ngũ hành ngày: ${nhNgay.hanh}) — Âm lịch ${lunar.lunarDay}/${lunar.lunarMonth}${lunar.lunarLeap ? ' (nhuận)' : ''}`;
+  const hdBadge = document.getElementById('ngayHoangDaoBadge');
+  hdBadge.textContent = isHoangDao ? '☀️ Ngày Hoàng Đạo (tốt)' : '🌑 Ngày Hắc Đạo (cần thận trọng)';
+  hdBadge.className = 'hoangdao-badge ' + (isHoangDao ? 'good' : 'bad');
+
   document.getElementById('todayVerdict').className = 'today-verdict ' + meta.cls;
   document.getElementById('todayEmoji').textContent = meta.emoji;
   document.getElementById('todayLabel').textContent = meta.label;
   document.getElementById('todayDesc').textContent = descPool[descIdx];
 
-  return { rel };
+  renderGioGrid(chiIdx);
+
+  return { rel, chiIdx, isHoangDao };
+}
+
+function renderGioGrid(chiIdx){
+  const list = danhSachGio12(chiIdx);
+  const wrap = document.getElementById('gioGrid');
+  wrap.innerHTML = list.map(g => `
+    <div class="gio-cell ${g.tot ? 'good' : 'bad'}">
+      <div class="g-name">${g.ten}</div>
+      <div class="g-time">${g.gio}</div>
+    </div>`).join('');
 }
 
 const QA_CATEGORIES = ['xuathanh','taichinh','tinhduyen','congviec','suckhoe'];
 let currentQaCategory = null;
 let cachedRel = null;
+let cachedChiIdx = null;
 
 function renderQaChips(){
   const wrap = document.getElementById('qaChipRow');
@@ -622,16 +752,82 @@ function renderQaChips(){
 }
 
 function askQuestion(category, questionLabel){
-  if(!cachedRel) cachedRel = renderToday().rel;
+  const todayInfo = renderToday();
+  cachedRel = todayInfo.rel;
+  cachedChiIdx = todayInfo.chiIdx;
+
   const advice = pickAdvice(category, cachedRel);
   const verdictText = advice.v === 'good' ? '✓ NÊN' : (advice.v === 'bad' ? '✗ KHÔNG NÊN' : '◐ CÂN NHẮC');
+
+  // Ly do: dua tren quan he ngu hanh ngay - menh
+  const nhBanMenh = nguHanhBanMenh(STATE.nam);
+  const nhNgay = hanhCuaChiIdx(cachedChiIdx);
+  const lyDoNguHanh = giaiThichQuanHe(cachedRel, nhNgay, nhBanMenh.hanh);
+
+  // Huong nen dung (tu cung phi cua nguoi dung)
+  const cp = cungPhi(STATE.nam, STATE.gioiTinh);
+  const huong = HUONG_TOT[cp.ten];
+  const huongTot = huong['Sinh khí'];
+
+  // Gio tot trong ngay duoc chon
+  const gioTot = danhSachGio12(cachedChiIdx).filter(g => g.tot);
+  const gioTotText = gioTot.map(g => `${g.ten} (${g.gio})`).join(', ');
+
+  // Tuoi hop tac (chi ap dung khi lien quan lam an/hop tac)
+  const chiNguoiDung = canChiNam(STATE.nam).chiIdx;
+  const tuoiHop = xepLoaiTuoiHop(chiNguoiDung);
+  const showTuoiHop = ['taichinh','congviec'].includes(category);
+
   const wrap = document.getElementById('qaAnswerWrap');
   wrap.innerHTML = `
     <div class="qa-answer">
       <div class="q-echo">Về việc: ${questionLabel}</div>
       <div class="verdict-badge ${advice.v}">${verdictText}</div>
       <div class="advice-text">${advice.t}</div>
+
+      <div class="reason-block">
+        <div class="r-title">🔍 Vì sao?</div>
+        <div class="r-text">${lyDoNguHanh}</div>
+      </div>
+
+      <div class="reason-block">
+        <div class="r-title">🧭 Phương hướng nên dùng</div>
+        <div class="r-text">Hướng <b>${huongTot}</b> (Sinh khí) hợp với cung mệnh ${cp.ten} của bạn.</div>
+      </div>
+
+      <div class="reason-block">
+        <div class="r-title">⏰ Giờ phù hợp trong ngày</div>
+        <div class="r-text">${gioTotText || 'Không có giờ hoàng đạo nổi bật hôm nay'}</div>
+      </div>
+
+      ${showTuoiHop ? `
+      <div class="reason-block">
+        <div class="r-title">🤝 Kết nối, hợp tác làm ăn với tuổi nào?</div>
+        <div class="r-text">Dựa trên tuổi ${CON_GIAP[chiNguoiDung]} (${CHI[chiNguoiDung]}) của bạn:</div>
+        <div class="tuoi-tag-row">
+          ${tuoiHop.tamHop.map(i => `<span class="tuoi-tag good">${CON_GIAP[i]} — rất hợp (Tam hợp)</span>`).join('')}
+          ${tuoiHop.lucHop.map(i => `<span class="tuoi-tag good">${CON_GIAP[i]} — hợp (Lục hợp)</span>`).join('')}
+          ${tuoiHop.lucXung.map(i => `<span class="tuoi-tag bad">${CON_GIAP[i]} — nên tránh (Xung khắc)</span>`).join('')}
+          ${tuoiHop.lucHai.map(i => `<span class="tuoi-tag bad">${CON_GIAP[i]} — kém hợp (Lục hại)</span>`).join('')}
+        </div>
+      </div>` : ''}
     </div>`;
+}
+
+function hanhCuaChiIdx(chiIdx){
+  // Uoc luong ngu hanh cua Chi ngay hien tai da tinh o buoc truoc (luu tam thoi qua bien global)
+  return window.__lastNhNgayHanh || 'Thổ';
+}
+
+function giaiThichQuanHe(rel, hanhNgay, hanhMenh){
+  const map = {
+    sinh_menh: `Ngũ hành ngày (${hanhNgay}) sinh ra mệnh của bạn (${hanhMenh}), nên bạn được trợ giúp, thuận lợi hơn bình thường.`,
+    ty_hoa: `Ngũ hành ngày (${hanhNgay}) cùng hành với mệnh của bạn (${hanhMenh}), nên mọi việc diễn ra cân bằng, ổn định.`,
+    menh_khac: `Mệnh của bạn (${hanhMenh}) khắc chế ngũ hành ngày (${hanhNgay}), nên bạn ở thế chủ động, dễ làm chủ tình huống.`,
+    menh_sinh: `Mệnh của bạn (${hanhMenh}) phải sinh ra cho ngũ hành ngày (${hanhNgay}), nên bạn dễ hao tổn sức lực/nguồn lực hơn.`,
+    khac_menh: `Ngũ hành ngày (${hanhNgay}) khắc chế mệnh của bạn (${hanhMenh}), nên cần thận trọng hơn trong quyết định.`
+  };
+  return map[rel] || '';
 }
 
 /* ============================================================
@@ -656,6 +852,8 @@ function hideSetup(){
 
 function initMainScreen(){
   renderProfile();
+  const todayStr = selectedDate.toISOString().split('T')[0];
+  document.getElementById('viewDateInput').value = todayStr;
   cachedRel = renderToday().rel;
   renderQaChips();
   document.getElementById('qaAnswerWrap').innerHTML = '';
@@ -675,6 +873,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     });
+  });
+
+  document.getElementById('viewDateInput').addEventListener('change', (e) => {
+    if(!e.target.value) return;
+    const [y,m,d] = e.target.value.split('-').map(Number);
+    selectedDate = new Date(y, m-1, d);
+    cachedRel = renderToday().rel;
+    document.getElementById('qaAnswerWrap').innerHTML = '';
+    document.querySelectorAll('.qa-chip').forEach(c => c.classList.remove('active'));
+  });
+  document.getElementById('btnTodayReset').addEventListener('click', () => {
+    selectedDate = new Date();
+    document.getElementById('viewDateInput').value = selectedDate.toISOString().split('T')[0];
+    cachedRel = renderToday().rel;
+    document.getElementById('qaAnswerWrap').innerHTML = '';
+    document.querySelectorAll('.qa-chip').forEach(c => c.classList.remove('active'));
   });
 
   document.getElementById('setupSubmitBtn').addEventListener('click', async () => {
