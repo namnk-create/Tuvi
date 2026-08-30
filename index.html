@@ -1366,6 +1366,23 @@ function showHuongDetail(idx) {
 // ===== LA BÀN =====
 let compassActive = false;
 let compassHandler = null;
+let compassMode = null;
+let compassReadings = [];
+let compassHasData = false;
+
+function circularMeanDeg(angles) {
+  let sx = 0, sy = 0;
+  angles.forEach(a => { const r = a * Math.PI / 180; sx += Math.cos(r); sy += Math.sin(r); });
+  let deg = Math.atan2(sy, sx) * 180 / Math.PI;
+  if (deg < 0) deg += 360;
+  return deg;
+}
+
+function pushCompassReading(h) {
+  compassReadings.push(h);
+  if (compassReadings.length > 5) compassReadings.shift();
+  return circularMeanDeg(compassReadings);
+}
 
 function headingToHuong8(heading) {
   const dirs = ['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
@@ -1385,6 +1402,9 @@ function closeCompassModal() {
     compassHandler = null;
   }
   compassActive = false;
+  compassMode = null;
+  compassReadings = [];
+  compassHasData = false;
 }
 
 function updateCompassUI(heading) {
@@ -1404,18 +1424,30 @@ function updateCompassUI(heading) {
 }
 
 function handleOrientationEvent(event) {
-  let heading = null;
-  if (typeof event.webkitCompassHeading === 'number') {
-    heading = event.webkitCompassHeading;
-  } else if (typeof event.alpha === 'number') {
-    heading = event.absolute ? (360 - event.alpha) : (360 - event.alpha);
+  let rawHeading = null;
+  if (typeof event.webkitCompassHeading === 'number' && !isNaN(event.webkitCompassHeading)) {
+    // iOS: nguồn đáng tin cậy nhất. Nếu đã xác định dùng nguồn này, bỏ qua sự kiện "absolute" khác
+    // để tránh 2 nguồn dữ liệu ghi đè chéo nhau gây kim la bàn nhảy sai (nguyên nhân chính gây lỗi trước đây).
+    if (compassMode === 'absolute') return;
+    compassMode = 'webkit';
+    rawHeading = event.webkitCompassHeading;
+  } else if (event.absolute === true && typeof event.alpha === 'number') {
+    if (compassMode === 'webkit') return;
+    compassMode = 'absolute';
+    rawHeading = (360 - event.alpha + 360) % 360;
+  } else {
+    return; // Dữ liệu không phải la bàn tuyệt đối (chỉ là góc xoay tương đối) — bỏ qua để tránh hiển thị sai.
   }
-  if (heading === null || isNaN(heading)) return;
-  updateCompassUI(heading);
+  compassHasData = true;
+  const smoothed = pushCompassReading(rawHeading);
+  updateCompassUI(smoothed);
 }
 
 async function enableCompass() {
   const textEl = document.getElementById('compassHeadingText');
+  compassMode = null;
+  compassReadings = [];
+  compassHasData = false;
   try {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
       const perm = await DeviceOrientationEvent.requestPermission();
@@ -1427,8 +1459,8 @@ async function enableCompass() {
     compassActive = true;
     if (textEl) textEl.textContent = 'Đang dò cảm biến... hãy xoay điện thoại hình số 8 nếu kim không di chuyển.';
     setTimeout(() => {
-      if (compassActive && textEl && textEl.textContent.includes('Đang dò')) {
-        textEl.textContent = '⚠️ Thiết bị/trình duyệt này không hỗ trợ cảm biến la bàn.';
+      if (compassActive && !compassHasData && textEl) {
+        textEl.textContent = '⚠️ Thiết bị/trình duyệt này không hỗ trợ cảm biến la bàn, hoặc cần thêm thao tác xoay để dò tín hiệu.';
       }
     }, 3000);
   } catch (e) {
